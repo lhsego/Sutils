@@ -1,0 +1,9 @@
+Package: hotspot
+Title: Hotspot designs that account for false negatives errors
+Version: 2010.04.20
+Author: Landon Sego
+Description: Hotspot designs that account for false negatives errors
+Maintainer: Landon Sego <Landon.Sego@pnl.gov>
+Depends:  pnlStat
+License: PNNL business sensitive
+Packaged: 

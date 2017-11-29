@@ -1,0 +1,21 @@
+
+***********************************************************************************
+Version 0.1.1, 25 September 2014
+
+Added the localCRANoptions() function to set options pertinent to PNNL prior to 
+calling functions in the localCRAN package.
+
+***********************************************************************************
+
+***********************************************************************************
+Version 0.1.0, 07 Aug 2014
+
+Most of the functions in pnlStat were pushed to the Smisc package, which will be 
+submitted to CRAN.
+
+The only functions that remain are those they are PNNL-centric and perhaps not
+suited for general use.  Since Smisc is a dependency of pnlStat, all the pnlStat 
+functionality should remain intact.  One notable exception is that piclapply() 
+is moving to the picRutils package.
+
+***********************************************************************************

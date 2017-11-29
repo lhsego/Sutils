@@ -1,0 +1,9 @@
+Package: monitoring
+Title: Functions for monitoring sequences over time
+Version: 2013.04.22
+Author: Landon Sego
+Description: Collection of functions for monitoring sequences over time: Shewhart, EWMA, and Cusum routines
+Maintainer: Landon Sego <Landon.Sego@pnl.gov>
+Depends: pnlStat
+License: PNNL proprietary
+Packaged: 

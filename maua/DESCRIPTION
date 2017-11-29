@@ -1,0 +1,16 @@
+Package: maua
+Title: maua: Multi-Attribute Utility Assessment
+Version: 0.0.1
+Date: 2016-04-15
+Author: Landon H. Sego
+Maintainer: Landon Sego <landon.sego@pnnl.gov>
+URL: http://pnnl.github.io/maua
+Description: Contains methods for performing multi-attribute utility
+    assessments of classifiers, estimating error of multi-attribute utility 
+    scores via bootstapping
+License: file LICENSE
+Imports:
+    Smisc
+Suggests:
+    testthat
+RoxygenNote: 5.0.1

@@ -1,0 +1,71 @@
+  /home1/d3p423/Shares/SQM/RPackages/SQM/trunk/SQM/R:
+
+Functions that don't need test scripts:
+
+  -rwxrwSrwx 1 root root  1697 Aug 19 11:44 accuracyMethods.r
+  -rwxrwSrwx 1 root root  4978 Aug 19 11:44 afAccuracy.r
+  -rwxrwSrwx 1 root root  4955 Aug 19 11:44 afScore.r
+  -rwxrwSrwx 1 root root   659 Aug 19 11:44 help.r
+  -rwxrwSrwx 1 root root  1009 Aug 19 11:44 readAccuracy.r
+  -rwxrwSrwx 1 root root  1137 Aug 19 11:44 readScore.r
+  -rwxrwSrwx 1 root root  1166 Aug 19 11:44 SQM.R
+  -rwxrwSrwx 1 root root  2468 Aug 19 11:44 writeAccuracy.r
+  -rwxrwSrwx 1 root root  1360 Aug 19 11:44 writeScore.r
+
+Functions that have test scripts completed and vetted:
+
+  -rwxrwSrwx 1 root root  2732 Sep 25 12:59 FNR.r   -- AH & AV
+  -rwxrwSrwx 1 root root  2416 Sep 25 12:57 FPR.r   -- AH & AV
+  -rwxrwSrwx 1 root root  2384 Sep 25 12:59 Fscore.r -- AH & AV
+  -rwxrwSrwx 1 root root  2273 Sep 25 10:01 accuracy.r -- AH & AV
+  -rwxrwSrwx 1 root root  2951 Sep 25 12:53 sensitivity.r -- AH & AV
+  -rwxrwSrwx 1 root root  2512 Sep 25 12:55 specificity.r -- AH & AV
+  -rwxrwSrwx 1 root root  2478 Sep 25 12:57 TNR.r -- AH & AV
+  -rwxrwSrwx 1 root root  2878 Sep 25 12:54 TPR.r -- AH & AV
+  -rwxrwSrwx 1 root root  2682 Aug 19 11:44 confusion.r -- AH & AV
+  -rwxrwSrwx 1 root root  2867 Sep 25 12:49 precision.r -- AH & AV
+  -rwxrwSrwx 1 root root  2890 Sep 25 12:50 recall.r -- AH & AV
+  -rwxrwSrwx 1 root root   946 Aug 19 11:44 scoreMethods.r -- AMV
+  -rwxrwSrwx 1 root root  6691 Sep 25 15:30 calcAccuracy.r -- AH
+
+
+Functions with test scripts in development:
+
+  -rwxrwSrwx 1 root root  3407 Aug 19 11:44 calcScore.r AMV
+  -rwxrwSrwx 1 root root   278 Aug 19 11:44 delta_ij.r AMV
+  -rwxrwSrwx 1 root root  5191 Aug 19 11:44 brierScore.r (rescaled score is still buggy) AMV
+  -rwxrwSrwx 1 root root  6844 Aug 19 11:44 idParetoFrontier.R AH
+
+
+
+Functions that need test scripts (or at least be visually checked):
+
+  -rwxrwSrwx 1 root root  5079 Aug 19 11:44 logScore.r
+
+  -rwxrwSrwx 1 root root  5826 Aug 19 11:44 pareto.R 
+  -rwxrwSrwx 1 root root  6844 Aug 19 11:44 idParetoFrontier.R
+
+  -rwxrwSrwx 1 root root  5686 Aug 19 11:44 fidelityDiscrete.R
+  -rwxrwSrwx 1 root root  5499 Aug 19 11:44 fidelityLogScore.R
+  -rwxrwSrwx 1 root root  1316 Aug 19 11:44 fidelityMethods.R
+
+  -rwxrwSrwx 1 root root  2779 Aug 19 11:44 logUtil.R
+  -rwxrwSrwx 1 root root  6211 Sep 12 13:14 expUtil.R
+
+  -rwxrwSrwx 1 root root  1025 Aug 19 11:44 saUtilMethods.R
+  -rwxrwSrwx 1 root root  8323 Sep 12 21:56 saUtil.R
+
+  -rwxrwSrwx 1 root root  1330 Aug 19 11:44 maUtilMethods.R
+  -rwxrwSrwx 1 root root  9014 Sep 12 16:06 addMultUtil.R
+
+  -rwxrwSrwx 1 root root  6890 Sep 12 22:23 maUtil.R
+
+  -rwxrwSrwx 1 root root  5428 Sep 12 10:17 calcExpectedUtil.R
+
+  -rwxrwSrwx 1 root root  1222 Aug 19 11:44 genBootstrapIndexes.R 
+  -rwxrwSrwx 1 root root 10376 Aug 19 11:44 bootStrap.R
+
+  -rwxrwSrwx 1 root root  1859 Aug 19 11:44 SQM_to_UtilApp.R
+  -rwxrwSrwx 1 root root  3173 Sep 12 13:57 UtilApp_to_SQM.R
+
+

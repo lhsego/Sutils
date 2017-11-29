@@ -1,0 +1,39 @@
+
+cjr package record of changes
+
+
+2009.09.22
+  Finalized CJR version used to test against VSP
+
+2009.11.13   
+  Added 'prior.pct.clean' to the items returned by find.n2() and find.n2.viable()
+
+2010.01.06
+  Added back the older 'find.n2.initial' and 'probRemain' so that we could still have the original CJR model of theta and theta/r.  Added back in the relevant arguments to 'cjrParms' to support 'find.n2.initial' and 'probRemain'.
+
+2010.03.03
+  Added the 'n2.0.viable' to the list output of n2.vs.viable.lambda().  The n2 sequence that is processed by n2.viable.lambda() is now log-linear.  And a smooth out the machine error, round(. , 14) was included in the diff() to verify whether lambda was non-increasing or not.
+
+2010.03.10
+  Modified 'n2.vs.viable.lambda' to exclude the 'flat-line' portion of the n2 vs. viable.lambda profile, added 'max.vl.diff' to the list of output.
+
+2010.03.13
+  Modified 'n2.vs.viable.lambda' to have a fixed minmum sequence length of 5000, and 'minimum.viable.lambda' was altered to have a default lambda sequence of size 50 with increments of 5e-07.  Added 'decimal precision' argument to 'find.n2.viable' and 'find.n2,' correctly used the precision in the first call to 'find.n2.viable' in 'n2.vs.viable.lambda'.
+
+2010.03.16
+  Added 'print.deviations' argument to 'n2.vs.viable.lambda'.  Flatline profiles from 'n2.vs.viable.lambda' now return summary info from 'minimum.viable.lambda' (instead of NA's).  Added 'num.not.viable' and 'seq.length' to the output list of 'minimum.viable.lambda'. 
+
+2010.03.18
+  Added 'n2.vs.viable.lambda.1' which does not run 'minimum.viable.lambda' when the viable.lambda for a particular n2 is equal to the target.lambda--but it also tests the entire sequence of 'n2' values (does not quit when the function flatlines).  Added the 'lambda.seq.length' argument to 'n2.vs.viable.lambda'.
+
+2010.06.30
+  Added 'gCalcConf', a function to simulate the confidence under the generalized CJR approach for the purpose of sensitivity studies for misspecification of prior parameters and number/location of judgmental samples.
+
+2010.08.17
+  Revised (simplified) is.viable.lambda() and find.viable.lambda() to use the results from the viable lambda theorem.  Backwards compatibility should be preserved, though at the expense of extra (and now deprecated) arguments.
+
+2010.08.31
+  Added calcConf.discrete() and 'discrete' argument to calcConf(), find.n2() and find.n2.viable().  This causes (1-lambda)*N to be rounded down to the nearest integer.
+
+Version 0.2.0:  2014.09.22
+  Added calcConf.fnr(), function for calculating the cjr confidence when the false negative rate is > 0

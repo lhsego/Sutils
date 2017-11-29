@@ -1,0 +1,126 @@
+\documentclass{article}
+\usepackage{url}
+
+\title{{\tt SQM}: An R Package for Signature Quality Metrics\\The Cost Component}
+\author{John A. Ramey}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+The {\tt SQM} package contains the R code for the Signature Quality Metrics project
+under the Signature Discovery Initiative (SDI) at the Pacific Northwest National
+Laboratory (PNNL). The purpose of the SQM project is to provide subject-matter
+experts (SMEs) with a set of tools to assess the quality of a set of signatures
+in terms of accuracy, cost, and utility. For each of these components, we
+have provided easy-to-use, accessible functions to measure the quality of
+inputted signatures. In this document, we discuss the SQM cost component
+and demonstrate its usage with a realistic example\footnote{Familarity with R
+is recommended to fully comprehend our provided examples.}.
+
+The {\tt Cost} component of {\tt SQM} enables an SME to evaluate and compare
+the initial and operational costs associated with multiple signatures. Paired
+with other SQM components, such as the {\tt Accuracy}, {\tt Risk} and
+{\tt Utility} components, an SME can identify cost-effective signatures that
+attain excellent results.
+
+To motivate the {\tt Cost} component, we consider an example with two signature
+systems, which we refer to as \emph{System A} and \emph{System B}. We assume that
+the research and development (R\&D) has been completed for each signature system.
+Our central question is: which sensor system should be deployed? For instance, if
+the first system is far more accurate but is substantially more costly, then the
+more cost-effective solution is not obvious. The purpose of this document is to
+demonstrate the calculation of the costs for each signature system so that the
+above question can be answered.
+
+\subsection{Example Costs}
+
+The {\tt SQM} package requires that the costs for each signature be provided.
+To demonstrate an approach this process, we first list the construct six
+candidate signatures from the Satellite data set using three machine learning
+algorithms, known as \emph{classifiers}. The three classifiers are applied to the
+Satellite data set to obtain the first three signatures. The remaining signatures
+are constructed by preprocessing the Satellite data set and then applying the
+same three classifiers.
+
+
+<<setup, message=FALSE>>=
+library('SQM')
+@
+
+\subsection{Annualized Development and Deployment Cost per Unit (DDCU)}
+
+% TODO: We need to change these total capital costs, so that they are not closely related to the real numbers.
+Total Capital Costs for System A: 1 million
+Total Capital Costs for System B: 230K
+
+<<DDCU, echo=FALSE>>=
+  # TODO: Determine what the startup costs are.
+  #   In the meeting, we said they "come from first year's operation costs"
+  assetNames <- c("R&D", "Implementation", "Startup", "Design", "Permitting", "Building/Construction", "Equipment")
+  costsSystemA <- c(0, 0, 0, 60000, 240000, 100000, 600000)
+  costsSystemB <- c(0, 0, 0, 13800, 55200, 115000, 46000)
+  costsDDCU <- cbind.data.frame(assetNames, costsSystemA, costsSystemB)
+  costsDDCU
+@
+
+\subsection{Intangible Costs per Unit (ICU)}
+
+We assume that we have no intangible costs. So, we do not generate a CSV costs file for the ICU
+
+\subsection{Operational Costs per Unit}
+
+<<vehicles, echo=FALSE>>=
+  vehiclesPerMinute <- 4
+  hoursPerDay <- 16
+
+  annualHoursCharged <- 365 * hoursPerDay
+
+  # Vehicles per Year is the "quantity of signatures" processed per year
+  vehiclesPerYear <-  60 * vehiclesPerMinute * annualHoursCharged
+@
+
+For simplicity, we assume that \Sexpr{vehiclesPerMinute} vehicles are processed
+by each signature system per minute and that vehicles processing occurs
+\Sexpr{hoursPerDay} hours per day. With these assumptions, we have that
+\Sexpr{vehiclesPerYear} vechicles are processed per year. We calculate our
+annual operational costs per unit based on these numbers.
+
+\subsubsection{Labor Cost per Unit (LCU)}
+
+<<laborRates, echo=FALSE>>=
+  burdenRateSystemA <- 30
+  burdenRateSystemB <- 55
+@
+
+We assume that each of Systems A and B has two laborers. In each case, there is
+an adjudication officer as well a clerk. Because System A is more sophisticated
+as well as more self-contained than System B, System B actually requires that the
+two daily laborers have a better skill set. For this reason, the burdened labor
+rate is larger for System B than for System A. We assume that the total burdened
+labor rate for System A is \$\Sexpr{burdenRateSystemA} per hour, whereas the
+total burdened rate for System B is \$\Sexpr{burdenRateSystemB} per hour.
+
+<<LCU_systems, results='asis'>>=
+  systemA <- c(annualHoursCharged, burdenRateSystemA, vehiclesPerYear)
+  systemB <- c(annualHoursCharged, burdenRateSystemB, vehiclesPerYear)
+
+@ 
+
+<<LCU_costs, echo=FALSE>>=
+  assetNames <- c("R&D", "Implementation", "Startup", "Design", "Permitting", "Building/Construction", "Equipment")
+  costsSystemA <- c(0, 0, 0, 60000, 240000, 100000, 600000)
+  costsSystemB <- c(0, 0, 0, 13800, 55200, 115000, 46000)
+  costsDDCU <- cbind.data.frame(assetNames, costsSystemA, costsSystemB)
+  costsDDCU
+@
+
+\subsubsection{Variable Costs per Unit (VCU)}
+
+\subsubsection{Fixed Costs per Unit (FCU)}
+
+
+
+\end{document}

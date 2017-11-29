@@ -1,0 +1,15 @@
+citHeader("To cite maua in publications use:")
+
+citEntry(entry = "Manual",
+  title        = "{maua: An R package for Multi-Attribute Utility Assessment}", 
+  author       = personList(as.person("Landon H. Sego")),
+  organization = "{Pacific Northwest National Laboratory}",
+  address      = "Richland, WA",
+  year         = "2016",
+  url          = "http://pnnl.github.io/maua",
+
+  textVersion  =
+  paste("Sego LH. 2016. maua: An R package for Multi-Attribute Utility Assessment.",
+        "Pacific Northwest National Laboratory.",
+        "http://pnnl.github.io/maua.")
+)

@@ -1,0 +1,1092 @@
+
+R version 3.3.3 (2017-03-06) -- "Another Canoe"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # Test script for constance.  Meant to be run primarily interactively--which I why I didn't put them into
+> # a 'testthat' format.
+> #
+> # Landon Sego, 19 October 2017
+> 
+> library(piclapply, lib.loc = "~/R")
+> 
+> ########################################
+> # Test 1: Show the host and nodes
+> ########################################
+> showAvailableSystems()
+[1] "constance"
+> showAvailableSystems(details = TRUE)
+These system-specific settings are set in 'systemSpecifics.R':
+
+System:  constance 
+
+  MPI compiler: /share/apps/mvapich2/2.0.1/gcc/4.8.2/bin/mpicc 
+
+  partitions computeNodeNames numCores
+1      short             node       24
+2       long             node       24
+3      slurm             node       24
+4        gpu              gpu       24
+5        phi              phi       16
+
+
+NULL
+> 
+> # Expecting error
+> try(example(piclapply))
+
+pclppl> ########################################
+pclppl> # Example 1
+pclppl> ########################################
+pclppl> 
+pclppl> ## You must set the PIC account name before launching this example:
+pclppl> ## i.e., account <- "PIC_account_name"
+pclppl> ## Don't show: 
+pclppl> if (exists("account", envir = .GlobalEnv)) {
+pclppl+   account <- get("account", envir = .GlobalEnv)
+pclppl+ } else {
+pclppl+    stop("To run this example, you need to assign the PIC account name to 'account' in the Global Environment, as follows:\n",
+pclppl+        "account <- \"PIC_account_name\"")
+pclppl+ }
+Error in eval(expr, envir, enclos) : 
+  To run this example, you need to assign the PIC account name to 'account' in the Global Environment, as follows:
+account <- "PIC_account_name"
+> 
+> # Note:  you may need to change the account name
+> account <- account.name <- "TeMpSA"
+> 
+> # Run the examples
+> example(piclapply)
+
+pclppl> ########################################
+pclppl> # Example 1
+pclppl> ########################################
+pclppl> 
+pclppl> ## You must set the PIC account name before launching this example:
+pclppl> ## i.e., account <- "PIC_account_name"
+pclppl> ## Don't show: 
+pclppl> if (exists("account", envir = .GlobalEnv)) {
+pclppl+   account <- get("account", envir = .GlobalEnv)
+pclppl+ } else {
+pclppl+    stop("To run this example, you need to assign the PIC account name to 'account' in the Global Environment, as follows:\n",
+pclppl+        "account <- \"PIC_account_name\"")
+pclppl+ }
+
+pclppl> ## End(Don't show)
+pclppl> # Create a simple list
+pclppl> a <- list(a = rnorm(10), b = rnorm(20), c = rnorm(15), d = rnorm(13), e = rnorm(15), f = rnorm(22))
+
+pclppl> # Some objects that will be needed by f1:
+pclppl> b1 <- rexp(20)
+
+pclppl> b2 <- rpois(10, 20)
+
+pclppl> # The function
+pclppl> f1 <- function(x) mean(x) + max(b1) - min(b2)
+
+pclppl> # Call piclapply
+pclppl> res.1 <- piclapply(a, f1, account,
+pclppl+                    needed.objects = c("b1", "b2"),
+pclppl+                    jobName = "example.1",
+pclppl+                    numNodes = 1,
+pclppl+                    partition = "short",
+pclppl+                    check.interval.sec = 1,
+pclppl+                    time.limit.mins = 1,
+pclppl+                    tarball = "none",
+pclppl+                    verbose = TRUE)
+
+************************************************************
+*****  Launching piclapply()
+************************************************************
+
+****  Job size has been reduced to accomodate the size of the list and utilize each node at 100%, if possible:
+partition = short; nCoresPerNode = 24; length(X) = 6; numNodes = 1; numRprocesses = 6
+
+************************************************************
+*****  Created working directories and filenames:
+************************************************************
+
+****  Working directory: /pic/scratch/d3p423/example.1_tmp_40486
+
+****  README file describing working directory contents: /pic/scratch/d3p423/example.1_tmp_40486/README.txt
+
+****  Output tarball file: none
+
+************************************************************
+*****  Launching SLURM job
+************************************************************
+
+****  MPI code '/pic/scratch/d3p423/example.1_tmp_40486/launch.c' written and compiled
+
+****  Submitted batch job 3649907. Launching 6 instances of R
+
+****  You can check the status of the SLURM job by typing 'squeue -u d3p423' at the system prompt
+
+****  Work on SLURM job began between 10 and 11 seconds after launching
+
+****  Waiting for SLURM job to complete...
+
+************************************************************
+*****  Job completion summary
+************************************************************
+
+****  SLURM job completed in 0.13 minutes
+
+****  The individual R jobs each completed on average in 0.043 minutes
+
+****  Recombining lists from completed R jobs...
+
+****  Recombination completed in 0.044 seconds
+
+****  Working directory '/pic/scratch/d3p423/example.1_tmp_40486' removed
+
+************************************************************
+*****  Total elapsed time for piclapply():  0.37 minutes
+************************************************************
+
+
+pclppl> # Call lapply to check the results
+pclppl> res.2 <- lapply(a, f1)
+
+pclppl> print(res.2)
+$a
+[1] -8.551066
+
+$b
+[1] -8.38017
+
+$c
+[1] -8.05283
+
+$d
+[1] -8.558512
+
+$e
+[1] -8.669301
+
+$f
+[1] -8.43348
+
+
+pclppl> # Compare results
+pclppl> all.equal(res.1, res.2)
+[1] TRUE
+
+pclppl> ########################################
+pclppl> # Example 2
+pclppl> ########################################
+pclppl> 
+pclppl> # Create a function that calculates the mean of a normal variate
+pclppl> mean.tmp <- function(list.element, sigma = 1) {
+pclppl+   set.seed(list.element)
+pclppl+   mean(rnorm(500, mean = list.element, sd = sigma))
+pclppl+ }
+
+pclppl> # Create a list of means (and seeds) to operate over
+pclppl> aList <- as.list(0:10000)
+
+pclppl> # Calculate it without piclapply
+pclppl> res.3 <- lapply(aList, mean.tmp, sigma = 0.5)
+
+pclppl> res.4 <- piclapply(aList, mean.tmp, account, sigma = 0.5,
+pclppl+                    jobName = "example.2",
+pclppl+                    time.limit.mins = 1,
+pclppl+                    numNodes = 3,
+pclppl+                    partition = "slurm",
+pclppl+                    parseJob.args = list(collate = TRUE, text.to.eval = TRUE),
+pclppl+                    check.interval.sec = 1,
+pclppl+                    tarball = "none",
+pclppl+                    verbose = TRUE)
+
+************************************************************
+*****  Launching piclapply()
+************************************************************
+
+************************************************************
+*****  Created working directories and filenames:
+************************************************************
+
+****  Working directory: /pic/scratch/d3p423/example.2_tmp_43081
+
+****  README file describing working directory contents: /pic/scratch/d3p423/example.2_tmp_43081/README.txt
+
+****  Output tarball file: none
+
+************************************************************
+*****  Launching SLURM job
+************************************************************
+
+****  MPI code '/pic/scratch/d3p423/example.2_tmp_43081/launch.c' written and compiled
+
+****  Submitted batch job 3649908. Launching 72 instances of R
+
+****  You can check the status of the SLURM job by typing 'squeue -u d3p423' at the system prompt
+
+****  Work on SLURM job began between 8 and 9 seconds after launching
+
+****  Waiting for SLURM job to complete...
+
+************************************************************
+*****  Job completion summary
+************************************************************
+
+****  SLURM job completed in 0.12 minutes
+
+****  The individual R jobs each completed on average in 0.013 minutes
+
+****  Recombining lists from completed R jobs...
+
+****  Recombination completed in 0.376 seconds
+
+****  Working directory '/pic/scratch/d3p423/example.2_tmp_43081' removed
+
+************************************************************
+*****  Total elapsed time for piclapply():  0.24 minutes
+************************************************************
+
+
+pclppl> head(res.3)
+[[1]]
+[1] -0.0001000242
+
+[[2]]
+[1] 1.011322
+
+[[3]]
+[1] 2.030846
+
+[[4]]
+[1] 3.026271
+
+[[5]]
+[1] 3.985426
+
+[[6]]
+[1] 4.99731
+
+
+pclppl> tail(res.3)
+[[1]]
+[1] 9995.03
+
+[[2]]
+[1] 9995.982
+
+[[3]]
+[1] 9997.009
+
+[[4]]
+[1] 9998.018
+
+[[5]]
+[1] 9998.985
+
+[[6]]
+[1] 10000.03
+
+
+pclppl> # These should be the same...
+pclppl> all.equal(res.3, res.4)
+[1] TRUE
+
+pclppl> ########################################
+pclppl> # Example 3:
+pclppl> # A more complicated example with packages,
+pclppl> # header files, and pre- and post-expressions
+pclppl> ########################################
+pclppl> 
+pclppl> # Create the header file
+pclppl> 
+pclppl> hf <- cat(# Print the process id and the number of R processes to the .Rout file
+pclppl+           "Smisc::pvar(process.id)\n",
+pclppl+ 
+pclppl+           # Create the pre-process expression by writing it into the header file
+pclppl+           "pre.process.expression <- expression({\n",
+pclppl+ 
+pclppl+           # Summarize the muscle data set to illustrate using another package (MASS)
+pclppl+           "   Smisc::pvar(numRprocesses)\n",
+pclppl+           "   data(muscle)\n",
+pclppl+           "   summary(muscle)\n",
+pclppl+ 
+pclppl+           "})\n",
+pclppl+ 
+pclppl+           # List all the objects in the environment
+pclppl+           "print(ls())\n",
+pclppl+ 
+pclppl+           # Write to the header file
+pclppl+           file = "tmpHeader.R", sep = "")
+
+pclppl> # Display the header file
+pclppl> Smisc::more("tmpHeader.R")
+Smisc::pvar(process.id)
+pre.process.expression <- expression({
+   Smisc::pvar(numRprocesses)
+   data(muscle)
+   summary(muscle)
+})
+print(ls()) 
+
+pclppl> # This post expression will be passed in via 'needed.arguments'
+pclppl> post.process.expression <- expression({
+pclppl+ 
+pclppl+   # Show original length of X.sub.out
+pclppl+   Smisc::pvar(length(X.sub.out))
+pclppl+   cat("Reducing X.sub.out now...\n")
+pclppl+ 
+pclppl+   # Calculate the mean for all the observations in the R process to reduce the sublist
+pclppl+   # into a list with 1 element
+pclppl+   X.sub.out <- as.list(mean(unlist(X.sub.out)))
+pclppl+ 
+pclppl+   # Now show its reduced length
+pclppl+   Smisc::pvar(length(X.sub.out))
+pclppl+ 
+pclppl+ })
+
+pclppl> # Create a function that calculates the mean of a normal variate
+pclppl> mean.tmp <- function(list.element, sigma = 1) {
+pclppl+ 
+pclppl+   # Set the seed using the process id, which exists in the global environment of the R instance
+pclppl+   set.seed(process.id)
+pclppl+ 
+pclppl+   # Return the mean
+pclppl+   return(mean(rnorm(500, mean = list.element, sd = sigma)))
+pclppl+ 
+pclppl+ }
+
+pclppl> # Create a list of means to operate over
+pclppl> aList <- as.list(0:10000)
+
+pclppl> # Run with lots of options
+pclppl> res.4 <- piclapply(aList, mean.tmp, account,
+pclppl+                    sigma = 0.5,
+pclppl+                    header.file = "tmpHeader.R",
+pclppl+                    packages = "MASS",
+pclppl+                    needed.objects = "post.process.expression",
+pclppl+                    jobName = "example.3",
+pclppl+                    time.limit.mins = 1,
+pclppl+                    numNodes = 2,
+pclppl+                    partition = "short",
+pclppl+                    parseJob.args = list(text.to.eval = TRUE),
+pclppl+                    check.interval.sec = 1,
+pclppl+                    tmp.file.list = "tmpFiles",
+pclppl+                    remove.working.dir = FALSE,
+pclppl+                    tarball = "none",
+pclppl+                    verbose = TRUE)
+
+************************************************************
+*****  Launching piclapply()
+************************************************************
+
+************************************************************
+*****  Created working directories and filenames:
+************************************************************
+
+****  Working directory: /pic/scratch/d3p423/example.3_tmp_44128
+
+****  README file describing working directory contents: /pic/scratch/d3p423/example.3_tmp_44128/README.txt
+
+****  Output tarball file: none
+
+************************************************************
+*****  Launching SLURM job
+************************************************************
+
+****  MPI code '/pic/scratch/d3p423/example.3_tmp_44128/launch.c' written and compiled
+
+****  Submitted batch job 3649909. Launching 48 instances of R
+
+****  You can check the status of the SLURM job by typing 'squeue -u d3p423' at the system prompt
+
+****  Work on SLURM job began between 10 and 11 seconds after launching
+
+****  Waiting for SLURM job to complete...
+
+************************************************************
+*****  Job completion summary
+************************************************************
+
+****  SLURM job completed in 0.58 minutes
+
+****  The individual R jobs each completed on average in 0.027 minutes
+
+****  Recombining lists from completed R jobs...
+
+****  Length of the output list does not match length of the input list. Original list names and ordering will not be preserved
+
+****  Recombination completed in 0.196 seconds
+
+************************************************************
+*****  Total elapsed time for piclapply():  0.8 minutes
+************************************************************
+
+
+pclppl> # Due to the post.process expression, this list has relatively few elements: one for each R
+pclppl> # process, whereas the original list had length 10000
+pclppl> length(res.4)
+[1] 48
+
+pclppl> head(res.4)
+$`1`
+[1] 103.9999
+
+$`2`
+[1] 2193.995
+
+$`3`
+[1] 2402.999
+
+$`4`
+[1] 2611.989
+
+$`5`
+[1] 2821.002
+
+$`6`
+[1] 3029.981
+
+
+pclppl> # Remove the header file
+pclppl> unlink("tmpHeader.R")
+
+pclppl> # Now print the 'tmpFiles' list object that was written to the global environment
+pclppl> print(tmpFiles)
+$wkdir
+[1] "/pic/scratch/d3p423/example.3_tmp_44128"
+
+$tarball
+[1] "none"
+
+
+pclppl> # Look at the .Rout file from one of the instances
+pclppl> anRoutFile <- dir(file.path(tmpFiles$wkdir, "logs"), full.name = TRUE)[2]
+
+pclppl> anRoutFile
+[1] "/pic/scratch/d3p423/example.3_tmp_44128/logs/piclapply_10.Rout"
+
+pclppl> Smisc::more(anRoutFile)
+
+R version 3.3.3 (2017-03-06) -- "Another Canoe"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # Load packages
+> library(piclapply)
+> library(MASS)
+> 
+> # Identify the process id passed in from the system call that launched this R process
+> process.id <- as.numeric(commandArgs(TRUE))
+> 
+> # Source the header file
+> source("tmpHeader.R")
+process.id = 10 
+[1] "pre.process.expression" "process.id"            
+> 
+> # Load the environment file that contains the R objects needed to call lapply()
+> load("/pic/scratch/d3p423/example.3_tmp_44128/Renvironment.Rdata")
+> 
+> # Restoring original names to needed objects and remove their copies
+> neededObjects.vec <- ls(pattern = paste("neededObjects", tmpNum, sep="."))
+> for (v in neededObjects.vec)
++   assign(Smisc::stripExtension(Smisc::stripExtension(v)), get(v))
+> rm(list = neededObjects.vec, neededObjects.vec)
+> 
+> # Evaluate pre-processing expression if it's present
+> if (exists("pre.process.expression"))
++   eval(pre.process.expression)
+numRprocesses = 48 
+     Strip         Conc           Length    
+ S01    : 4   Min.   :0.250   Min.   : 2.0  
+ S02    : 4   1st Qu.:0.875   1st Qu.:15.4  
+ S03    : 4   Median :1.000   Median :23.1  
+ S16    : 4   Mean   :1.512   Mean   :21.7  
+ S17    : 4   3rd Qu.:2.000   3rd Qu.:28.5  
+ S04    : 3   Max.   :4.000   Max.   :37.0  
+ (Other):37                                 
+> 
+> # Identify the subset to be processed by this instance of R
+> subset.i <- eval(parse(text = subsets[[process.id + 1]]))
+> 
+> # Create the subsetted list and remove the old one (to free up memory in case it's large)
+> X.sub <- X[subset.i]
+> rm(X, subsets, subset.i)
+> 
+> # Call lapply
+> X.sub.out <- lapply(X.sub, FUN.p)
+> 
+> # Evaluate post-processing expression if it's present
+> if (exists("post.process.expression"))
++   eval(post.process.expression)
+length(X.sub.out) = 209 
+Reducing X.sub.out now...
+length(X.sub.out) = 1 
+> 
+> # Save the results
+> fout <- paste("/pic/scratch/d3p423/example.3_tmp_44128/out/example.3_completed_", process.id, ".Rdata", sep="")
+> save(X.sub.out, file = fout)
+> 
+> # Print warnings
+> warnings()
+NULL
+> 
+> proc.time()
+   user  system elapsed 
+  0.423   0.092   1.223  
+
+pclppl> # Now remove the temporary folders
+pclppl> system(paste("rm -r", tmpFiles$wkdir))
+> 
+> ########################################
+> #  Verify tests work on each partition
+> ########################################
+> 
+> # Create a function that calculates the mean of a normal variate
+> mean.tmp <- function(list.element, sigma = 1) {
++   set.seed(list.element)
++   mean(rnorm(500, mean = list.element, sd = sigma))
++ }
+> 
+> # Create a list of means (and seeds) to operate over
+> aList <- as.list(0:10000)
+> 
+> # Calculate it without piclapply
+> res <- lapply(aList, mean.tmp, sigma = 0.5)
+> 
+> # Test over the different partitions
+> nodeTest <- function(partition, verbose = FALSE) {
++ 
++     res.4 <- piclapply(aList, mean.tmp, account.name, sigma = 0.5,
++                        jobName = "example.2",
++                        time.limit.mins = 5,
++                        numNodes = 2,
++                        partition = partition,
++                        parseJob.args = list(collate = TRUE, text.to.eval = TRUE),
++                        check.interval.sec = 1,
++                        tarball = "none",
++                        verbose = verbose)
++ }
+> 
+> slurm <- nodeTest("slurm", TRUE)
+
+************************************************************
+*****  Launching piclapply()
+************************************************************
+
+************************************************************
+*****  Created working directories and filenames:
+************************************************************
+
+****  Working directory: /pic/scratch/d3p423/example.2_tmp_46119
+
+****  README file describing working directory contents: /pic/scratch/d3p423/example.2_tmp_46119/README.txt
+
+****  Output tarball file: none
+
+************************************************************
+*****  Launching SLURM job
+************************************************************
+
+****  MPI code '/pic/scratch/d3p423/example.2_tmp_46119/launch.c' written and compiled
+
+****  Submitted batch job 3649910. Launching 48 instances of R
+
+****  You can check the status of the SLURM job by typing 'squeue -u d3p423' at the system prompt
+
+****  Work on SLURM job began between 12 and 13 seconds after launching
+
+****  Waiting for SLURM job to complete...
+
+************************************************************
+*****  Job completion summary
+************************************************************
+
+****  SLURM job completed in 1.17 minutes
+
+****  The individual R jobs each completed on average in 0.03 minutes
+
+****  Recombining lists from completed R jobs...
+
+****  Recombination completed in 0.262 seconds
+
+****  Working directory '/pic/scratch/d3p423/example.2_tmp_46119' removed
+
+************************************************************
+*****  Total elapsed time for piclapply():  1.38 minutes
+************************************************************
+
+> short <- nodeTest("short")
+> gpu <- nodeTest("gpu")
+> phi <- nodeTest("phi")
+> long <- nodeTest("long")
+> 
+> # These should all be TRUE
+> all.equal(res, slurm)
+[1] TRUE
+> all.equal(res, short)
+[1] TRUE
+> all.equal(res, gpu)
+[1] TRUE
+> all.equal(res, phi)
+[1] TRUE
+> all.equal(res, long)
+[1] TRUE
+> 
+> 
+> ########################################
+> # Test 4:  use of primitives
+> ########################################
+> aList <- Smisc::parseJob(1000, 60)
+> 
+> # Randomly insert some NA's
+> aList <- lapply(aList, function(x) {x[sample(1:length(x), sample(0:3, 1))] <- NA; return(x)})
+> 
+> res.6 <- piclapply(aList, sum, account.name,
++                    na.rm = TRUE,
++                    numNodes = 1,
++                    partition = "short",
++                    check.interval.sec = 5,
++                    time.limit.mins = 5,
++                    tarball = "none",
++                    verbose = FALSE)
+> 
+> # Should be TRUE
+> all.equal(lapply(aList, sum, na.rm = TRUE), res.6)
+[1] TRUE
+> 
+> # Wihout removing NA's
+> res.7 <- piclapply(aList, sum, account.name,
++                    numNodes = 2,
++                    partition = "short",
++                    check.interval.sec = 1,
++                    time.limit.mins = 5,
++                    tarball = "none",
++                    verbose = FALSE)
+> 
+> # Should be TRUE
+> all.equal(lapply(aList, sum), res.7)
+[1] TRUE
+> 
+> 
+> ########################################
+> # Checking errors on argument inputs
+> ########################################
+> 
+> # wrong partition
+> res.1 <- try(piclapply(a, f1, account.name,
++                       needed.objects = c("b1", "b2"),
++                       jobName = "example.1",
++                       numNodes = 1,
++                       partition = "shorty",
++                       check.interval.sec = 1,
++                       time.limit.mins = 1,
++                       tarball = "none"))
+Error : piclapply(a, f1, account.name, needed.objects = c("b1", "b2"), 
+    jobName = "example.1", numNodes = 1, partition = "shorty", 
+    check.interval.sec = 1, time.limit.mins = 1, tarball = "none")
+When using 'constance', 'partition' must be one of 'short', 'long', 'slurm', 'gpu', 'phi'
+> 
+> # Should be TRUE
+> grepl("'partition' must be one of", res.1)
+[1] TRUE
+> 
+> # remove.working.dir
+> res.1 <- try(piclapply(a, f1, account.name,
++                       needed.objects = c("b1", "b2"),
++                       jobName = "example.1",
++                       numNodes = 1,
++                       partition = "short",
++                       check.interval.sec = 1,
++                       time.limit.mins = 1,
++                       tarball = "none",
++                       remove.working.dir = "bad",
++                       verbose = TRUE))
+
+************************************************************
+*****  Launching piclapply()
+************************************************************
+
+Error in piclapply(a, f1, account.name, needed.objects = c("b1", "b2"),  : 
+  'remove.working.dir' should be TRUE or FALSE
+
+> 
+> # Should be TRUE
+> grepl("'remove.working.dir' should be TRUE or FALSE", res.1)
+[1] TRUE
+> 
+> 
+> # multiple strings for tarball
+> res.1 <- try(piclapply(a, f1, account.name,
++                       needed.objects = c("b1", "b2"),
++                       jobName = "example.1",
++                       numNodes = 1,
++                       partition = "short",
++                       check.interval.sec = 1,
++                       time.limit.mins = 5,
++                       tarball = c("none", "noe1"),
++                       verbose = FALSE))
+Error in piclapply(a, f1, account.name, needed.objects = c("b1", "b2"),  : 
+  'tarball' should be a character string or NULL
+> 
+> # Should be TRUE
+> grepl("should be a character string or NULL", res.1)
+[1] TRUE
+> 
+> 
+> # jobName
+> res.1 <- try(piclapply(a, f1, account.name,
++                       needed.objects = c("b1", "b2"),
++                       jobName = FALSE,
++                       numNodes = 1,
++                       partition = "short",
++                       check.interval.sec = 1,
++                       time.limit.mins = 5,
++                       tarball = "none"))
+Error in piclapply(a, f1, account.name, needed.objects = c("b1", "b2"),  : 
+  'jobName' should be a character string
+> 
+> # Should be TRUE
+> grepl("'jobName' should be a character string", res.1)
+[1] TRUE
+> 
+> 
+> # packages
+> res.1 <- try(piclapply(a, f1, account.name,
++                       needed.objects = c("b1", "b2"),
++                       jobName = "new",
++                       numNodes = 1,
++                       packages = 10,
++                       partition = "short",
++                       check.interval.sec = 1,
++                       time.limit.mins = 5,
++                       tarball = "none"))
+Error in piclapply(a, f1, account.name, needed.objects = c("b1", "b2"),  : 
+  'packages' should be a character string, character vector, or NULL
+> 
+> # Should be TRUE
+> grepl("'packages' should be a character string", res.1)
+[1] TRUE
+> 
+> 
+> # Non existent package
+> res.1 <- try(piclapply(a, f1, account.name,
++                       needed.objects = c("b1", "b2"),
++                       jobName = "new",
++                       numNodes = 1,
++                       packages = c("MASS", "thisIsNotaPackage"),
++                       partition = "short",
++                       check.interval.sec = 1,
++                       time.limit.mins = 5,
++                       tarball = "none"))
+Error in piclapply(a, f1, account.name, needed.objects = c("b1", "b2"),  : 
+  The following requested package(s) is/are not installed: 'thisIsNotaPackage'
+> 
+> # Should be TRUE
+> grepl("The following requested", res.1)
+[1] TRUE
+> 
+> 
+> # Non existent packages
+> res.1 <- try(piclapply(a, f1, account.name,
++                       needed.objects = c("b1", "b2"),
++                       jobName = "new",
++                       numNodes = 1,
++                       packages = c("MASS", "thisisnot1", "thisisnot2"),
++                       partition = "short",
++                       check.interval.sec = 1,
++                       time.limit.mins = 5,
++                       tarball = "none"))
+Error in piclapply(a, f1, account.name, needed.objects = c("b1", "b2"),  : 
+  The following requested package(s) is/are not installed: 'thisisnot1', 'thisisnot2'
+> 
+> # Should be TRUE
+> grepl("The following requested", res.1)
+[1] TRUE
+> 
+> 
+> # time.limit.mins
+> res.1 <- try(piclapply(a, f1, account.name,
++                       needed.objects = c("b1", "b2"),
++                       jobName = "new",
++                       numNodes = 1,
++                       partition = "short",
++                       check.interval.sec = 1,
++                       time.limit.mins = 5.2,
++                       tarball = "none",
++                       verbose = FALSE))
+Error in piclapply(a, f1, account.name, needed.objects = c("b1", "b2"),  : 
+  'time.limit.mins' must be a positive integer
+> 
+> # Should be TRUE
+> grepl("'time.limit.mins' must be a positive integer", res.1)
+[1] TRUE
+> 
+> # bad needed objects
+> res.1 <- try(piclapply(a, f1, account.name,
++                       needed.objects = c("b1", "notHere"),
++                       jobName = "new",
++                       numNodes = 1,
++                       partition = "short",
++                       check.interval.sec = 1,
++                       time.limit.mins = 5,
++                       tarball = "none",
++                       verbose = FALSE))
+Error in piclapply(a, f1, account.name, needed.objects = c("b1", "notHere"),  : 
+  needed.object 'notHere' does not exist in environment 'parent.frame()'
+> 
+> # Should be TRUE
+> grepl("needed.object 'notHere' does not exist", res.1)
+[1] TRUE
+> 
+> 
+> # bad parseJob arguments
+> res.1 <- try(piclapply(a, f1, account.name,
++                       needed.objects = c("b1", "b2"),
++                       jobName = "new",
++                       numNodes = 1,
++                       partition = "short",
++                       check.interval.sec = 1,
++                       parseJob.args = list(not1 = 7, collate = TRUE, not2 = "this"),
++                       time.limit.mins = 5,
++                       tarball = "none",
++                       verbose = FALSE))
+Error in piclapply(a, f1, account.name, needed.objects = c("b1", "b2"),  : 
+  The following are not acceptable arguments to 'parseJob':
+'not1', 'not2'
+> 
+> # Should be TRUE
+> grepl("The following are not acceptable", res.1)
+[1] TRUE
+> 
+> 
+> # Stick in some reserved objects
+> process.id <- 12
+> X <- 22
+> res.1 <- try(piclapply(a, f1, account.name,
++                        needed.objects = c("b1", "b2", "process.id", "X"),
++                        jobName = "new",
++                        numNodes = 1,
++                        partition = "short",
++                        check.interval.sec = 1,
++                        time.limit.mins = 1,
++                        tarball = "none",
++                        verbose = FALSE))
+Error in piclapply(a, f1, account.name, needed.objects = c("b1", "b2",  : 
+  The following are reserved objects for 'piclapply', and should not be included
+in the 'needed.objects' argument: 'process.id', 'X'
+
+> 
+> # Should be TRUE
+> grepl("reserved objects", res.1)
+[1] TRUE
+> 
+> 
+> # Bad additional arguments to fun
+> f2 <- function(x, b1 = 10, b2 = 12) mean(x) + max(b1) - min(b2)
+> res.1 <- try(piclapply(a, f2, b8 = 13, b7 = "bad", account.name,
++                        jobName = "new",
++                        numNodes = 1,
++                        partition = "short",
++                        check.interval.sec = 1,
++                        time.limit.mins = 1,
++                        tarball = "none",
++                        verbose = FALSE))
+Error in piclapply(a, f2, b8 = 13, b7 = "bad", account.name, jobName = "new",  : 
+  The following optional argument(s) does/do not match the optional arguments of FUN:
+'b8', 'b7'
+> 
+> # Should be TRUE
+> grepl("optional arguments", res.1)
+[1] TRUE
+> 
+> # Bad additional arguments to fun
+> res.1 <- try(piclapply(a, f2, b1 = 6, b20 = 13,
++                        account.name,
++                        jobName = "new",
++                        numNodes = 1,
++                        partition = "short",
++                        check.interval.sec = 1,
++                        time.limit.mins = 1,
++                        tarball = "none",
++                        verbose = FALSE))
+Error in piclapply(a, f2, b1 = 6, b20 = 13, account.name, jobName = "new",  : 
+  The following optional argument(s) does/do not match the optional arguments of FUN:
+'b20'
+> 
+> # Should be TRUE
+> grepl("optional arguments", res.1)
+[1] TRUE
+> 
+> # Bad account name
+> res.1 <- try(piclapply(a, f1, "badName",
++                        needed.objects = c("b1", "b2"),
++                        jobName = "example.1",
++                        numNodes = 1,
++                        partition = "short",
++                        check.interval.sec = 1,
++                        time.limit.mins = 1,
++                        tarball = "none",
++                        verbose = TRUE))
+
+************************************************************
+*****  Launching piclapply()
+************************************************************
+
+****  Job size has been reduced to accomodate the size of the list and utilize each node at 100%, if possible:
+partition = short; nCoresPerNode = 24; length(X) = 6; numNodes = 1; numRprocesses = 6
+
+************************************************************
+*****  Created working directories and filenames:
+************************************************************
+
+****  Working directory: /pic/scratch/d3p423/example.1_tmp_10451
+
+****  README file describing working directory contents: /pic/scratch/d3p423/example.1_tmp_10451/README.txt
+
+****  Output tarball file: none
+
+************************************************************
+*****  Launching SLURM job
+************************************************************
+
+****  MPI code '/pic/scratch/d3p423/example.1_tmp_10451/launch.c' written and compiled
+
+Warning: running command 'sbatch /pic/scratch/d3p423/example.1_tmp_10451/slurmLaunch.sh 2>/pic/scratch/d3p423/example.1_tmp_10451/sbatch.err' had status 1
+****  SLURM job failed to launch.  These are the contents of '/pic/scratch/d3p423/example.1_tmp_10451/sbatch.err':
+
+sbatch: error: Batch job submission failed: Invalid account or account/partition combination specified 
+
+Error in launchSLURM() : SLURM job failed to launch
+> 
+> # Check the custom tarball file
+> res.1 <- piclapply(a, f1, account.name,
++                    needed.objects = c("b1", "b2"),
++                    jobName = "example.1",
++                    numNodes = 1,
++                    partition = "short",
++                    check.interval.sec = 1,
++                    time.limit.mins = 1,
++                    tarball = "tmpTar.tar.gz",
++                    verbose = FALSE)
+> 
+> # Should be true
+> file.exists("tmpTar.tar.gz")
+[1] TRUE
+> unlink("tmpTar.tar.gz")
+> 
+> # Verify default tarball file
+> res.1 <- piclapply(a, f1, account.name,
++                    needed.objects = c("b1", "b2"),
++                    jobName = "example.5",
++                    numNodes = 1,
++                    partition = "short",
++                    check.interval.sec = 1,
++                    time.limit.mins = 1,
++                    tmp.file.list = "tmpF",
++                    verbose = FALSE)
+> 
+> print(tmpF)
+$wkdir
+[1] "/pic/scratch/d3p423/example.5_tmp_11889"
+
+$tarball
+[1] "/people/d3p423/private/example.5_output_11889.tar.gz"
+
+> 
+> # Should be TRUE
+> file.exists(tmpF$tarball)
+[1] TRUE
+> unlink(tmpF$tarball)
+> 
+> 
+> # Investigate working directory and email
+> res.1 <- piclapply(a, f1, account.name,
++                    needed.objects = c("b1", "b2"),
++                    jobName = "example.1",
++                    numNodes = 1,
++                    partition = "short",
++                    check.interval.sec = 1,
++                    time.limit.mins = 1,
++                    tarball = "none",
++                    remove.working.dir = FALSE,
++                    verbose = FALSE,
++                    tmp.file.list = "tmpF1",
++                    email.notification = "landon.sego@pnnl.gov")
+> 
+> 
+> # Show working folders and README file
+> dir(tmpF1$wkdir)
+ [1] "launch.c"           "launch.o"           "logs"              
+ [4] "out"                "piclapply.R"        "README.txt"        
+ [7] "Renvironment.Rdata" "sbatch.err"         "slurmLaunch.err"   
+[10] "slurmLaunch.out"    "slurmLaunch.sh"    
+> dir(file.path(tmpF1$wkdir, "logs"))
+[1] "piclapply_0.Rout" "piclapply_1.Rout" "piclapply_2.Rout" "piclapply_3.Rout"
+[5] "piclapply_4.Rout" "piclapply_5.Rout"
+> dir(file.path(tmpF1$wkdir, "out"))
+[1] "example.1_completed_0.Rdata" "example.1_completed_1.Rdata"
+[3] "example.1_completed_2.Rdata" "example.1_completed_3.Rdata"
+[5] "example.1_completed_4.Rdata" "example.1_completed_5.Rdata"
+> Smisc::more(file.path(tmpF1$wkdir, "README.txt"))
+This folder contains working files created by piclapply() on 2017-10-19 22:46:21:
+
+launch.c
+   The MPI C code that launches one R instance per core in a SLURM batch allocation
+
+launch.o
+   The compilation (executable) of the MPI code
+
+slurmLaunch.sh
+   The SLURM batch script launched via 'sbatch'
+
+slurmLaunch.out
+   Standard output file for the SLURM batch job
+
+slurmLaunch.err
+   Error file for the SLURM batch job
+
+sbatch.err
+   Error file from the 'sbatch' system command
+
+piclapply.R
+   The R script that is executed by each R instance
+
+Renvironment.Rdata
+   The R environment that is loaded into each R instance that containins all needed objects
+
+logs
+   Directory containing the *.Rout files for the individual R jobs
+
+out
+   Directory containing the output lists for the individual R jobs that will be recombined 
+> unlink(tmpF1$wkdir)
+> 
+> proc.time()
+   user  system elapsed 
+ 10.689   6.309 418.410 

@@ -1,0 +1,755 @@
+\documentclass{article}
+\usepackage{graphicx, color}
+\newcommand{\hlnumber}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlfunctioncall}[1]{\textcolor[rgb]{.5,0,.33}{\textbf{#1}}}%
+\newcommand{\hlstring}[1]{\textcolor[rgb]{.6,.6,1}{#1}}%
+\newcommand{\hlkeyword}[1]{\textbf{#1}}%
+\newcommand{\hlargument}[1]{\textcolor[rgb]{.69,.25,.02}{#1}}%
+\newcommand{\hlcomment}[1]{\textcolor[rgb]{.18,.6,.34}{#1}}%
+\newcommand{\hlroxygencomment}[1]{\textcolor[rgb]{.44,.48,.7}{#1}}%
+\newcommand{\hlformalargs}[1]{\hlargument{#1}}%
+\newcommand{\hleqformalargs}[1]{\hlargument{#1}}%
+\newcommand{\hlassignement}[1]{\textbf{#1}}%
+\newcommand{\hlpackage}[1]{\textcolor[rgb]{.59,.71,.145}{#1}}%
+\newcommand{\hlslot}[1]{\textit{#1}}%
+\newcommand{\hlsymbol}[1]{#1}%
+\newcommand{\hlprompt}[1]{\textcolor[rgb]{.5,.5,.5}{#1}}%
+
+\usepackage{color}%
+ 
+\newsavebox{\hlnormalsizeboxclosebrace}%
+\newsavebox{\hlnormalsizeboxopenbrace}%
+\newsavebox{\hlnormalsizeboxbackslash}%
+\newsavebox{\hlnormalsizeboxlessthan}%
+\newsavebox{\hlnormalsizeboxgreaterthan}%
+\newsavebox{\hlnormalsizeboxdollar}%
+\newsavebox{\hlnormalsizeboxunderscore}%
+\newsavebox{\hlnormalsizeboxand}%
+\newsavebox{\hlnormalsizeboxhash}%
+\newsavebox{\hlnormalsizeboxat}%
+\newsavebox{\hlnormalsizeboxpercent}% 
+\newsavebox{\hlnormalsizeboxhat}%
+\newsavebox{\hlnormalsizeboxsinglequote}%
+\newsavebox{\hlnormalsizeboxbacktick}%
+
+\setbox\hlnormalsizeboxopenbrace=\hbox{\begin{normalsize}\verb.{.\end{normalsize}}%
+\setbox\hlnormalsizeboxclosebrace=\hbox{\begin{normalsize}\verb.}.\end{normalsize}}%
+\setbox\hlnormalsizeboxlessthan=\hbox{\begin{normalsize}\verb.<.\end{normalsize}}%
+\setbox\hlnormalsizeboxdollar=\hbox{\begin{normalsize}\verb.$.\end{normalsize}}%
+\setbox\hlnormalsizeboxunderscore=\hbox{\begin{normalsize}\verb._.\end{normalsize}}%
+\setbox\hlnormalsizeboxand=\hbox{\begin{normalsize}\verb.&.\end{normalsize}}%
+\setbox\hlnormalsizeboxhash=\hbox{\begin{normalsize}\verb.#.\end{normalsize}}%
+\setbox\hlnormalsizeboxat=\hbox{\begin{normalsize}\verb.@.\end{normalsize}}%
+\setbox\hlnormalsizeboxbackslash=\hbox{\begin{normalsize}\verb.\.\end{normalsize}}%
+\setbox\hlnormalsizeboxgreaterthan=\hbox{\begin{normalsize}\verb.>.\end{normalsize}}%
+\setbox\hlnormalsizeboxpercent=\hbox{\begin{normalsize}\verb.%.\end{normalsize}}%
+\setbox\hlnormalsizeboxhat=\hbox{\begin{normalsize}\verb.^.\end{normalsize}}%
+\setbox\hlnormalsizeboxsinglequote=\hbox{\begin{normalsize}\verb.'.\end{normalsize}}%
+\setbox\hlnormalsizeboxbacktick=\hbox{\begin{normalsize}\verb.`.\end{normalsize}}%
+\setbox\hlnormalsizeboxhat=\hbox{\begin{normalsize}\verb.^.\end{normalsize}}%
+
+
+
+\newsavebox{\hltinyboxclosebrace}%
+\newsavebox{\hltinyboxopenbrace}%
+\newsavebox{\hltinyboxbackslash}%
+\newsavebox{\hltinyboxlessthan}%
+\newsavebox{\hltinyboxgreaterthan}%
+\newsavebox{\hltinyboxdollar}%
+\newsavebox{\hltinyboxunderscore}%
+\newsavebox{\hltinyboxand}%
+\newsavebox{\hltinyboxhash}%
+\newsavebox{\hltinyboxat}%
+\newsavebox{\hltinyboxpercent}% 
+\newsavebox{\hltinyboxhat}%
+\newsavebox{\hltinyboxsinglequote}%
+\newsavebox{\hltinyboxbacktick}%
+
+\setbox\hltinyboxopenbrace=\hbox{\begin{tiny}\verb.{.\end{tiny}}%
+\setbox\hltinyboxclosebrace=\hbox{\begin{tiny}\verb.}.\end{tiny}}%
+\setbox\hltinyboxlessthan=\hbox{\begin{tiny}\verb.<.\end{tiny}}%
+\setbox\hltinyboxdollar=\hbox{\begin{tiny}\verb.$.\end{tiny}}%
+\setbox\hltinyboxunderscore=\hbox{\begin{tiny}\verb._.\end{tiny}}%
+\setbox\hltinyboxand=\hbox{\begin{tiny}\verb.&.\end{tiny}}%
+\setbox\hltinyboxhash=\hbox{\begin{tiny}\verb.#.\end{tiny}}%
+\setbox\hltinyboxat=\hbox{\begin{tiny}\verb.@.\end{tiny}}%
+\setbox\hltinyboxbackslash=\hbox{\begin{tiny}\verb.\.\end{tiny}}%
+\setbox\hltinyboxgreaterthan=\hbox{\begin{tiny}\verb.>.\end{tiny}}%
+\setbox\hltinyboxpercent=\hbox{\begin{tiny}\verb.%.\end{tiny}}%
+\setbox\hltinyboxhat=\hbox{\begin{tiny}\verb.^.\end{tiny}}%
+\setbox\hltinyboxsinglequote=\hbox{\begin{tiny}\verb.'.\end{tiny}}%
+\setbox\hltinyboxbacktick=\hbox{\begin{tiny}\verb.`.\end{tiny}}%
+\setbox\hltinyboxhat=\hbox{\begin{tiny}\verb.^.\end{tiny}}%
+
+
+
+\newsavebox{\hlscriptsizeboxclosebrace}%
+\newsavebox{\hlscriptsizeboxopenbrace}%
+\newsavebox{\hlscriptsizeboxbackslash}%
+\newsavebox{\hlscriptsizeboxlessthan}%
+\newsavebox{\hlscriptsizeboxgreaterthan}%
+\newsavebox{\hlscriptsizeboxdollar}%
+\newsavebox{\hlscriptsizeboxunderscore}%
+\newsavebox{\hlscriptsizeboxand}%
+\newsavebox{\hlscriptsizeboxhash}%
+\newsavebox{\hlscriptsizeboxat}%
+\newsavebox{\hlscriptsizeboxpercent}% 
+\newsavebox{\hlscriptsizeboxhat}%
+\newsavebox{\hlscriptsizeboxsinglequote}%
+\newsavebox{\hlscriptsizeboxbacktick}%
+
+\setbox\hlscriptsizeboxopenbrace=\hbox{\begin{scriptsize}\verb.{.\end{scriptsize}}%
+\setbox\hlscriptsizeboxclosebrace=\hbox{\begin{scriptsize}\verb.}.\end{scriptsize}}%
+\setbox\hlscriptsizeboxlessthan=\hbox{\begin{scriptsize}\verb.<.\end{scriptsize}}%
+\setbox\hlscriptsizeboxdollar=\hbox{\begin{scriptsize}\verb.$.\end{scriptsize}}%
+\setbox\hlscriptsizeboxunderscore=\hbox{\begin{scriptsize}\verb._.\end{scriptsize}}%
+\setbox\hlscriptsizeboxand=\hbox{\begin{scriptsize}\verb.&.\end{scriptsize}}%
+\setbox\hlscriptsizeboxhash=\hbox{\begin{scriptsize}\verb.#.\end{scriptsize}}%
+\setbox\hlscriptsizeboxat=\hbox{\begin{scriptsize}\verb.@.\end{scriptsize}}%
+\setbox\hlscriptsizeboxbackslash=\hbox{\begin{scriptsize}\verb.\.\end{scriptsize}}%
+\setbox\hlscriptsizeboxgreaterthan=\hbox{\begin{scriptsize}\verb.>.\end{scriptsize}}%
+\setbox\hlscriptsizeboxpercent=\hbox{\begin{scriptsize}\verb.%.\end{scriptsize}}%
+\setbox\hlscriptsizeboxhat=\hbox{\begin{scriptsize}\verb.^.\end{scriptsize}}%
+\setbox\hlscriptsizeboxsinglequote=\hbox{\begin{scriptsize}\verb.'.\end{scriptsize}}%
+\setbox\hlscriptsizeboxbacktick=\hbox{\begin{scriptsize}\verb.`.\end{scriptsize}}%
+\setbox\hlscriptsizeboxhat=\hbox{\begin{scriptsize}\verb.^.\end{scriptsize}}%
+
+
+
+\newsavebox{\hlfootnotesizeboxclosebrace}%
+\newsavebox{\hlfootnotesizeboxopenbrace}%
+\newsavebox{\hlfootnotesizeboxbackslash}%
+\newsavebox{\hlfootnotesizeboxlessthan}%
+\newsavebox{\hlfootnotesizeboxgreaterthan}%
+\newsavebox{\hlfootnotesizeboxdollar}%
+\newsavebox{\hlfootnotesizeboxunderscore}%
+\newsavebox{\hlfootnotesizeboxand}%
+\newsavebox{\hlfootnotesizeboxhash}%
+\newsavebox{\hlfootnotesizeboxat}%
+\newsavebox{\hlfootnotesizeboxpercent}% 
+\newsavebox{\hlfootnotesizeboxhat}%
+\newsavebox{\hlfootnotesizeboxsinglequote}%
+\newsavebox{\hlfootnotesizeboxbacktick}%
+
+\setbox\hlfootnotesizeboxopenbrace=\hbox{\begin{footnotesize}\verb.{.\end{footnotesize}}%
+\setbox\hlfootnotesizeboxclosebrace=\hbox{\begin{footnotesize}\verb.}.\end{footnotesize}}%
+\setbox\hlfootnotesizeboxlessthan=\hbox{\begin{footnotesize}\verb.<.\end{footnotesize}}%
+\setbox\hlfootnotesizeboxdollar=\hbox{\begin{footnotesize}\verb.$.\end{footnotesize}}%
+\setbox\hlfootnotesizeboxunderscore=\hbox{\begin{footnotesize}\verb._.\end{footnotesize}}%
+\setbox\hlfootnotesizeboxand=\hbox{\begin{footnotesize}\verb.&.\end{footnotesize}}%
+\setbox\hlfootnotesizeboxhash=\hbox{\begin{footnotesize}\verb.#.\end{footnotesize}}%
+\setbox\hlfootnotesizeboxat=\hbox{\begin{footnotesize}\verb.@.\end{footnotesize}}%
+\setbox\hlfootnotesizeboxbackslash=\hbox{\begin{footnotesize}\verb.\.\end{footnotesize}}%
+\setbox\hlfootnotesizeboxgreaterthan=\hbox{\begin{footnotesize}\verb.>.\end{footnotesize}}%
+\setbox\hlfootnotesizeboxpercent=\hbox{\begin{footnotesize}\verb.%.\end{footnotesize}}%
+\setbox\hlfootnotesizeboxhat=\hbox{\begin{footnotesize}\verb.^.\end{footnotesize}}%
+\setbox\hlfootnotesizeboxsinglequote=\hbox{\begin{footnotesize}\verb.'.\end{footnotesize}}%
+\setbox\hlfootnotesizeboxbacktick=\hbox{\begin{footnotesize}\verb.`.\end{footnotesize}}%
+\setbox\hlfootnotesizeboxhat=\hbox{\begin{footnotesize}\verb.^.\end{footnotesize}}%
+
+
+
+\newsavebox{\hlsmallboxclosebrace}%
+\newsavebox{\hlsmallboxopenbrace}%
+\newsavebox{\hlsmallboxbackslash}%
+\newsavebox{\hlsmallboxlessthan}%
+\newsavebox{\hlsmallboxgreaterthan}%
+\newsavebox{\hlsmallboxdollar}%
+\newsavebox{\hlsmallboxunderscore}%
+\newsavebox{\hlsmallboxand}%
+\newsavebox{\hlsmallboxhash}%
+\newsavebox{\hlsmallboxat}%
+\newsavebox{\hlsmallboxpercent}% 
+\newsavebox{\hlsmallboxhat}%
+\newsavebox{\hlsmallboxsinglequote}%
+\newsavebox{\hlsmallboxbacktick}%
+
+\setbox\hlsmallboxopenbrace=\hbox{\begin{small}\verb.{.\end{small}}%
+\setbox\hlsmallboxclosebrace=\hbox{\begin{small}\verb.}.\end{small}}%
+\setbox\hlsmallboxlessthan=\hbox{\begin{small}\verb.<.\end{small}}%
+\setbox\hlsmallboxdollar=\hbox{\begin{small}\verb.$.\end{small}}%
+\setbox\hlsmallboxunderscore=\hbox{\begin{small}\verb._.\end{small}}%
+\setbox\hlsmallboxand=\hbox{\begin{small}\verb.&.\end{small}}%
+\setbox\hlsmallboxhash=\hbox{\begin{small}\verb.#.\end{small}}%
+\setbox\hlsmallboxat=\hbox{\begin{small}\verb.@.\end{small}}%
+\setbox\hlsmallboxbackslash=\hbox{\begin{small}\verb.\.\end{small}}%
+\setbox\hlsmallboxgreaterthan=\hbox{\begin{small}\verb.>.\end{small}}%
+\setbox\hlsmallboxpercent=\hbox{\begin{small}\verb.%.\end{small}}%
+\setbox\hlsmallboxhat=\hbox{\begin{small}\verb.^.\end{small}}%
+\setbox\hlsmallboxsinglequote=\hbox{\begin{small}\verb.'.\end{small}}%
+\setbox\hlsmallboxbacktick=\hbox{\begin{small}\verb.`.\end{small}}%
+\setbox\hlsmallboxhat=\hbox{\begin{small}\verb.^.\end{small}}%
+
+
+
+\newsavebox{\hllargeboxclosebrace}%
+\newsavebox{\hllargeboxopenbrace}%
+\newsavebox{\hllargeboxbackslash}%
+\newsavebox{\hllargeboxlessthan}%
+\newsavebox{\hllargeboxgreaterthan}%
+\newsavebox{\hllargeboxdollar}%
+\newsavebox{\hllargeboxunderscore}%
+\newsavebox{\hllargeboxand}%
+\newsavebox{\hllargeboxhash}%
+\newsavebox{\hllargeboxat}%
+\newsavebox{\hllargeboxpercent}% 
+\newsavebox{\hllargeboxhat}%
+\newsavebox{\hllargeboxsinglequote}%
+\newsavebox{\hllargeboxbacktick}%
+
+\setbox\hllargeboxopenbrace=\hbox{\begin{large}\verb.{.\end{large}}%
+\setbox\hllargeboxclosebrace=\hbox{\begin{large}\verb.}.\end{large}}%
+\setbox\hllargeboxlessthan=\hbox{\begin{large}\verb.<.\end{large}}%
+\setbox\hllargeboxdollar=\hbox{\begin{large}\verb.$.\end{large}}%
+\setbox\hllargeboxunderscore=\hbox{\begin{large}\verb._.\end{large}}%
+\setbox\hllargeboxand=\hbox{\begin{large}\verb.&.\end{large}}%
+\setbox\hllargeboxhash=\hbox{\begin{large}\verb.#.\end{large}}%
+\setbox\hllargeboxat=\hbox{\begin{large}\verb.@.\end{large}}%
+\setbox\hllargeboxbackslash=\hbox{\begin{large}\verb.\.\end{large}}%
+\setbox\hllargeboxgreaterthan=\hbox{\begin{large}\verb.>.\end{large}}%
+\setbox\hllargeboxpercent=\hbox{\begin{large}\verb.%.\end{large}}%
+\setbox\hllargeboxhat=\hbox{\begin{large}\verb.^.\end{large}}%
+\setbox\hllargeboxsinglequote=\hbox{\begin{large}\verb.'.\end{large}}%
+\setbox\hllargeboxbacktick=\hbox{\begin{large}\verb.`.\end{large}}%
+\setbox\hllargeboxhat=\hbox{\begin{large}\verb.^.\end{large}}%
+
+
+
+\newsavebox{\hlLargeboxclosebrace}%
+\newsavebox{\hlLargeboxopenbrace}%
+\newsavebox{\hlLargeboxbackslash}%
+\newsavebox{\hlLargeboxlessthan}%
+\newsavebox{\hlLargeboxgreaterthan}%
+\newsavebox{\hlLargeboxdollar}%
+\newsavebox{\hlLargeboxunderscore}%
+\newsavebox{\hlLargeboxand}%
+\newsavebox{\hlLargeboxhash}%
+\newsavebox{\hlLargeboxat}%
+\newsavebox{\hlLargeboxpercent}% 
+\newsavebox{\hlLargeboxhat}%
+\newsavebox{\hlLargeboxsinglequote}%
+\newsavebox{\hlLargeboxbacktick}%
+
+\setbox\hlLargeboxopenbrace=\hbox{\begin{Large}\verb.{.\end{Large}}%
+\setbox\hlLargeboxclosebrace=\hbox{\begin{Large}\verb.}.\end{Large}}%
+\setbox\hlLargeboxlessthan=\hbox{\begin{Large}\verb.<.\end{Large}}%
+\setbox\hlLargeboxdollar=\hbox{\begin{Large}\verb.$.\end{Large}}%
+\setbox\hlLargeboxunderscore=\hbox{\begin{Large}\verb._.\end{Large}}%
+\setbox\hlLargeboxand=\hbox{\begin{Large}\verb.&.\end{Large}}%
+\setbox\hlLargeboxhash=\hbox{\begin{Large}\verb.#.\end{Large}}%
+\setbox\hlLargeboxat=\hbox{\begin{Large}\verb.@.\end{Large}}%
+\setbox\hlLargeboxbackslash=\hbox{\begin{Large}\verb.\.\end{Large}}%
+\setbox\hlLargeboxgreaterthan=\hbox{\begin{Large}\verb.>.\end{Large}}%
+\setbox\hlLargeboxpercent=\hbox{\begin{Large}\verb.%.\end{Large}}%
+\setbox\hlLargeboxhat=\hbox{\begin{Large}\verb.^.\end{Large}}%
+\setbox\hlLargeboxsinglequote=\hbox{\begin{Large}\verb.'.\end{Large}}%
+\setbox\hlLargeboxbacktick=\hbox{\begin{Large}\verb.`.\end{Large}}%
+\setbox\hlLargeboxhat=\hbox{\begin{Large}\verb.^.\end{Large}}%
+
+
+
+\newsavebox{\hlLARGEboxclosebrace}%
+\newsavebox{\hlLARGEboxopenbrace}%
+\newsavebox{\hlLARGEboxbackslash}%
+\newsavebox{\hlLARGEboxlessthan}%
+\newsavebox{\hlLARGEboxgreaterthan}%
+\newsavebox{\hlLARGEboxdollar}%
+\newsavebox{\hlLARGEboxunderscore}%
+\newsavebox{\hlLARGEboxand}%
+\newsavebox{\hlLARGEboxhash}%
+\newsavebox{\hlLARGEboxat}%
+\newsavebox{\hlLARGEboxpercent}% 
+\newsavebox{\hlLARGEboxhat}%
+\newsavebox{\hlLARGEboxsinglequote}%
+\newsavebox{\hlLARGEboxbacktick}%
+
+\setbox\hlLARGEboxopenbrace=\hbox{\begin{LARGE}\verb.{.\end{LARGE}}%
+\setbox\hlLARGEboxclosebrace=\hbox{\begin{LARGE}\verb.}.\end{LARGE}}%
+\setbox\hlLARGEboxlessthan=\hbox{\begin{LARGE}\verb.<.\end{LARGE}}%
+\setbox\hlLARGEboxdollar=\hbox{\begin{LARGE}\verb.$.\end{LARGE}}%
+\setbox\hlLARGEboxunderscore=\hbox{\begin{LARGE}\verb._.\end{LARGE}}%
+\setbox\hlLARGEboxand=\hbox{\begin{LARGE}\verb.&.\end{LARGE}}%
+\setbox\hlLARGEboxhash=\hbox{\begin{LARGE}\verb.#.\end{LARGE}}%
+\setbox\hlLARGEboxat=\hbox{\begin{LARGE}\verb.@.\end{LARGE}}%
+\setbox\hlLARGEboxbackslash=\hbox{\begin{LARGE}\verb.\.\end{LARGE}}%
+\setbox\hlLARGEboxgreaterthan=\hbox{\begin{LARGE}\verb.>.\end{LARGE}}%
+\setbox\hlLARGEboxpercent=\hbox{\begin{LARGE}\verb.%.\end{LARGE}}%
+\setbox\hlLARGEboxhat=\hbox{\begin{LARGE}\verb.^.\end{LARGE}}%
+\setbox\hlLARGEboxsinglequote=\hbox{\begin{LARGE}\verb.'.\end{LARGE}}%
+\setbox\hlLARGEboxbacktick=\hbox{\begin{LARGE}\verb.`.\end{LARGE}}%
+\setbox\hlLARGEboxhat=\hbox{\begin{LARGE}\verb.^.\end{LARGE}}%
+
+
+
+\newsavebox{\hlhugeboxclosebrace}%
+\newsavebox{\hlhugeboxopenbrace}%
+\newsavebox{\hlhugeboxbackslash}%
+\newsavebox{\hlhugeboxlessthan}%
+\newsavebox{\hlhugeboxgreaterthan}%
+\newsavebox{\hlhugeboxdollar}%
+\newsavebox{\hlhugeboxunderscore}%
+\newsavebox{\hlhugeboxand}%
+\newsavebox{\hlhugeboxhash}%
+\newsavebox{\hlhugeboxat}%
+\newsavebox{\hlhugeboxpercent}% 
+\newsavebox{\hlhugeboxhat}%
+\newsavebox{\hlhugeboxsinglequote}%
+\newsavebox{\hlhugeboxbacktick}%
+
+\setbox\hlhugeboxopenbrace=\hbox{\begin{huge}\verb.{.\end{huge}}%
+\setbox\hlhugeboxclosebrace=\hbox{\begin{huge}\verb.}.\end{huge}}%
+\setbox\hlhugeboxlessthan=\hbox{\begin{huge}\verb.<.\end{huge}}%
+\setbox\hlhugeboxdollar=\hbox{\begin{huge}\verb.$.\end{huge}}%
+\setbox\hlhugeboxunderscore=\hbox{\begin{huge}\verb._.\end{huge}}%
+\setbox\hlhugeboxand=\hbox{\begin{huge}\verb.&.\end{huge}}%
+\setbox\hlhugeboxhash=\hbox{\begin{huge}\verb.#.\end{huge}}%
+\setbox\hlhugeboxat=\hbox{\begin{huge}\verb.@.\end{huge}}%
+\setbox\hlhugeboxbackslash=\hbox{\begin{huge}\verb.\.\end{huge}}%
+\setbox\hlhugeboxgreaterthan=\hbox{\begin{huge}\verb.>.\end{huge}}%
+\setbox\hlhugeboxpercent=\hbox{\begin{huge}\verb.%.\end{huge}}%
+\setbox\hlhugeboxhat=\hbox{\begin{huge}\verb.^.\end{huge}}%
+\setbox\hlhugeboxsinglequote=\hbox{\begin{huge}\verb.'.\end{huge}}%
+\setbox\hlhugeboxbacktick=\hbox{\begin{huge}\verb.`.\end{huge}}%
+\setbox\hlhugeboxhat=\hbox{\begin{huge}\verb.^.\end{huge}}%
+
+
+
+\newsavebox{\hlHugeboxclosebrace}%
+\newsavebox{\hlHugeboxopenbrace}%
+\newsavebox{\hlHugeboxbackslash}%
+\newsavebox{\hlHugeboxlessthan}%
+\newsavebox{\hlHugeboxgreaterthan}%
+\newsavebox{\hlHugeboxdollar}%
+\newsavebox{\hlHugeboxunderscore}%
+\newsavebox{\hlHugeboxand}%
+\newsavebox{\hlHugeboxhash}%
+\newsavebox{\hlHugeboxat}%
+\newsavebox{\hlHugeboxpercent}% 
+\newsavebox{\hlHugeboxhat}%
+\newsavebox{\hlHugeboxsinglequote}%
+\newsavebox{\hlHugeboxbacktick}%
+
+\setbox\hlHugeboxopenbrace=\hbox{\begin{Huge}\verb.{.\end{Huge}}%
+\setbox\hlHugeboxclosebrace=\hbox{\begin{Huge}\verb.}.\end{Huge}}%
+\setbox\hlHugeboxlessthan=\hbox{\begin{Huge}\verb.<.\end{Huge}}%
+\setbox\hlHugeboxdollar=\hbox{\begin{Huge}\verb.$.\end{Huge}}%
+\setbox\hlHugeboxunderscore=\hbox{\begin{Huge}\verb._.\end{Huge}}%
+\setbox\hlHugeboxand=\hbox{\begin{Huge}\verb.&.\end{Huge}}%
+\setbox\hlHugeboxhash=\hbox{\begin{Huge}\verb.#.\end{Huge}}%
+\setbox\hlHugeboxat=\hbox{\begin{Huge}\verb.@.\end{Huge}}%
+\setbox\hlHugeboxbackslash=\hbox{\begin{Huge}\verb.\.\end{Huge}}%
+\setbox\hlHugeboxgreaterthan=\hbox{\begin{Huge}\verb.>.\end{Huge}}%
+\setbox\hlHugeboxpercent=\hbox{\begin{Huge}\verb.%.\end{Huge}}%
+\setbox\hlHugeboxhat=\hbox{\begin{Huge}\verb.^.\end{Huge}}%
+\setbox\hlHugeboxsinglequote=\hbox{\begin{Huge}\verb.'.\end{Huge}}%
+\setbox\hlHugeboxbacktick=\hbox{\begin{Huge}\verb.`.\end{Huge}}%
+\setbox\hlHugeboxhat=\hbox{\begin{Huge}\verb.^.\end{Huge}}%
+ 
+
+\def\urltilda{\kern -.15em\lower .7ex\hbox{\~{}}\kern .04em}%
+
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.16,0.16,1}{#1}}
+\newcommand{\hlesc}[1]{\textcolor[rgb]{1,0,1}{#1}}
+\newcommand{\hlstr}[1]{\textcolor[rgb]{1,0,0}{#1}}
+\newcommand{\hldstr}[1]{\textcolor[rgb]{0.51,0.51,0}{#1}}
+\newcommand{\hlslc}[1]{\textcolor[rgb]{0.51,0.51,0.51}{\it{#1}}}
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.51,0.51,0.51}{\it{#1}}}
+\newcommand{\hldir}[1]{\textcolor[rgb]{0,0.51,0}{#1}}
+\newcommand{\hlsym}[1]{\textcolor[rgb]{0,0,0}{#1}}
+\newcommand{\hlline}[1]{\textcolor[rgb]{0.33,0.33,0.33}{#1}}
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0,0,0}{\bf{#1}}}
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.51,0,0}{#1}}
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0,0,0}{\bf{#1}}}
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0,0,0.51}{#1}}
+
+\definecolor{fgcolor}{rgb}{0,0,0}
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\newcommand{\SweaveOpts}[1]{}  % do not interfere with LaTeX
+\newcommand{\SweaveInput}[1]{} % because they are not real TeX commands
+\newcommand{\Sexpr}[1]{}       % will only be parsed by R
+
+\usepackage{url}
+
+\title{{\tt SQM}: An R Package for Signature Quality Metrics\\The Accuracy Component}
+\author{John A. Ramey}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+The {\tt SQM} package contains the R code for the Signature Quality Metrics project
+under the Signature Discovery Initiative (SDI) at the Pacific Northwest National
+Laboratory (PNNL). The purpose of the SQM project is to provide subject-matter
+experts (SMEs) with a set of tools to assess the quality of a set of signatures
+in terms of accuracy, cost, and utility. For each of these components, we
+have provided easy-to-use, accessible functions to measure the quality of
+inputted signatures. In this document, we discuss each of the SQM components
+and demonstrate their usage with realistic examples\footnote{Familarity with R
+is recommended to fully comprehend our provided examples.}.
+
+The {\tt Accuracy} component of {\tt SQM} enables an SME to explore the efficacy
+of a set of candidate signatures to determine which of these signatures are
+nearly optimal as defined by a variety of available accuracy measures. Paired
+with other SQM components, such as {\tt Cost}, the {\tt Accuracy} component
+equips an SME to identify cost-effective signatures that attain excellent
+accuracy.
+
+To motivate the {\tt Accuracy} component, we use a widely-studied, public domain
+data set with six signatures that we construct below. For demonstration purposes,
+we use the UCI Machine Learning Repository's Satellite data set\footnote{For more
+details about the Satellite data set, see
+\url{http://archive.ics.uci.edu/ml/datasets/Statlog+(Landsat+Satellite)}.},
+which is available in the {\tt mlbench} R package. 
+
+\subsection{Signature Construction}
+
+The {\tt SQM} package requires that candidate signatures are previously
+constructed. To demonstrate an approach this process, we first construct six
+candidate signatures from the Satellite data set using three machine learning
+algorithms, known as \emph{classifiers}. The three classifiers are applied to the
+Satellite data set to obtain the first three signatures. The remaining signatures
+are constructed by preprocessing the Satellite data set and then applying the
+same three classifiers.
+
+We begin the signature construction by loading the necessary R packages and the
+Satellite data set.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{flushleft}
+\ttfamily\noindent
+\hlfunctioncall{library}\hlkeyword{(}\hlstring{"{}caret"{}}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlfunctioncall{library}\hlkeyword{(}\hlstring{"{}SQM"{}}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlfunctioncall{library}\hlkeyword{(}\hlstring{"{}mlbench"{}}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlfunctioncall{library}\hlkeyword{(}\hlstring{"{}reshape2"{}}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlfunctioncall{data}\hlkeyword{(}\hlstring{"{}Satellite"{}}\hlkeyword{)}\mbox{}
+\normalfont
+\end{flushleft}
+\end{kframe}
+\end{knitrout}
+
+
+The Satellite data is provided in a {\tt data.frame}. For clarity, we explicitly
+assign the variables (i.e covariates/feature vectors) into the usual {\tt X}
+matrix. Also, we note that the true classes of each observation are given, and we
+assign these to the usual {\tt Y} vector.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{flushleft}
+\ttfamily\noindent
+\hlsymbol{satelliteX}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{subset}\hlkeyword{(}\hlsymbol{Satellite}\hlkeyword{,}{\ }\hlargument{select}{\ }\hlargument{=}{\ }\hlkeyword{-}\hlsymbol{classes}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlsymbol{satelliteY}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlsymbol{Satellite}\hlkeyword{\usebox{\hlnormalsizeboxdollar}}\hlsymbol{classes}\mbox{}
+\normalfont
+\end{flushleft}
+\end{kframe}
+\end{knitrout}
+
+
+As provided, the class labels in the Satellite data set have white space, which
+can lead to annoying warnings. To stifle these warnings, we replace the
+whitespace in the class labels with periods.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{flushleft}
+\ttfamily\noindent
+\hlfunctioncall{levels}\hlkeyword{(}\hlsymbol{satelliteY}\hlkeyword{)}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{gsub}\hlkeyword{(}\hlstring{"{}{\ }"{}}\hlkeyword{,}{\ }\hlstring{"{}."{}}\hlkeyword{,}{\ }\hlfunctioncall{levels}\hlkeyword{(}\hlsymbol{satelliteY}\hlkeyword{)}\hlkeyword{)}\mbox{}
+\normalfont
+\end{flushleft}
+\end{kframe}
+\end{knitrout}
+
+
+Next, we randomly partition the Satellite data set into a training and a test
+data set, where the training data set has 1/4 of the original observations and
+the test data set contains the remaining observations. To partition the data set,
+we use the {\tt createDataPartition} function from the {\tt caret} package after
+setting a fixed seed for the random number generator to achieve reproducible
+results.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{flushleft}
+\ttfamily\noindent
+\hlfunctioncall{set.seed}\hlkeyword{(}\hlnumber{42}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlsymbol{inTrain}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{createDataPartition}\hlkeyword{(}\hlsymbol{satelliteY}\hlkeyword{,}{\ }\hlargument{p}{\ }\hlargument{=}{\ }\hlnumber{1}\hlkeyword{/}\hlnumber{4}\hlkeyword{,}{\ }\hlargument{list}{\ }\hlargument{=}{\ }\hlnumber{FALSE}\hlkeyword{,}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlargument{times}{\ }\hlargument{=}{\ }\hlnumber{1}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlsymbol{trainX}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlsymbol{satelliteX}\hlkeyword{[}\hlsymbol{inTrain}\hlkeyword{,}{\ }\hlkeyword{]}\hspace*{\fill}\\
+\hlstd{}\hlsymbol{testX}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlsymbol{satelliteX}\hlkeyword{[}\hlkeyword{-}\hlsymbol{inTrain}\hlkeyword{,}{\ }\hlkeyword{]}\hspace*{\fill}\\
+\hlstd{}\hlsymbol{trainY}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlsymbol{satelliteY}\hlkeyword{[}\hlsymbol{inTrain}\hlkeyword{]}\hspace*{\fill}\\
+\hlstd{}\hlsymbol{testY}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlsymbol{satelliteY}\hlkeyword{[}\hlkeyword{-}\hlsymbol{inTrain}\hlkeyword{]}\mbox{}
+\normalfont
+\end{flushleft}
+\end{kframe}
+\end{knitrout}
+
+
+The class labels for the observations in the data set are considered unknown from
+the perspective of the signatures. Thus, the class labels in {\tt testY} are
+considered as the unknown, ground truth. Below, we train three classifiers on the
+training data set and classify the test observations in hopes that we correctly
+identify their true classes, which are given in testY. For clarity, we store the
+test classes as {\tt truthClass}. Each classifier should be viewed as a different
+signature, and their test classifications/predictions are the {\tt predictedClass}
+in the {\tt SQM} package.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{flushleft}
+\ttfamily\noindent
+\hlsymbol{truthClass}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlsymbol{testY}\mbox{}
+\normalfont
+\end{flushleft}
+\end{kframe}
+\end{knitrout}
+
+
+We train each of the given classifiers with two training data sets.
+The first data set is the unaltered training data set from above.
+To construct the second data set, we keep only the features (variables) with
+a pairwise correlation above 0.95 with another feature. The choice of 0.95 is
+arbitrary. This feature selection approach is useful for demonstration but should
+be viewed as naive in practice.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{flushleft}
+\ttfamily\noindent
+\hlsymbol{keptFeatures}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{findCorrelation}\hlkeyword{(}\hlfunctioncall{cor}\hlkeyword{(}\hlsymbol{trainX}\hlkeyword{)}\hlkeyword{,}{\ }\hlargument{cutoff}{\ }\hlargument{=}{\ }\hlnumber{0.95}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlsymbol{trainX2}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlsymbol{trainX}\hlkeyword{[}\hlkeyword{,}{\ }\hlsymbol{keptFeatures}\hlkeyword{]}\hspace*{\fill}\\
+\hlstd{}\hlsymbol{testX2}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlsymbol{testX}\hlkeyword{[}\hlkeyword{,}{\ }\hlsymbol{keptFeatures}\hlkeyword{]}\mbox{}
+\normalfont
+\end{flushleft}
+\end{kframe}
+\end{knitrout}
+
+
+To construct each signature, we apply 10-fold cross-validation with the help of
+the {\tt trainControl} function given by the {\tt caret} package.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{flushleft}
+\ttfamily\noindent
+\hlsymbol{fitControl}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{trainControl}\hlkeyword{(}\hlargument{method}{\ }\hlargument{=}{\ }\hlstring{"{}cv"{}}\hlkeyword{,}{\ }\hlargument{number}{\ }\hlargument{=}{\ }\hlnumber{10}\hlkeyword{)}\mbox{}
+\normalfont
+\end{flushleft}
+\end{kframe}
+\end{knitrout}
+
+
+As we have discussed above, we utilize three classifiers in order to construct
+the six signatures. These classifiers that we use are:
+
+\begin{enumerate}
+  \item Linear Discriminant Analysis
+  \item $k$-Nearest Neighbors
+  \item Support Vector Machine with Radial Basis Functions
+\end{enumerate}
+
+We train each classifier twice: first on the unaltered training data set and
+then on the preprocessed data set. We use the {\tt train} function from the
+{\tt caret} package to train the classifiers.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{flushleft}
+\ttfamily\noindent
+\hlsymbol{ldaFit1}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{train}\hlkeyword{(}\hlsymbol{trainX}\hlkeyword{,}{\ }\hlsymbol{trainY}\hlkeyword{,}{\ }\hlargument{method}{\ }\hlargument{=}{\ }\hlstring{"{}lda"{}}\hlkeyword{,}{\ }\hlargument{trControl}{\ }\hlargument{=}{\ }\hlsymbol{fitControl}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlsymbol{knnFit1}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{train}\hlkeyword{(}\hlsymbol{trainX}\hlkeyword{,}{\ }\hlsymbol{trainY}\hlkeyword{,}{\ }\hlargument{method}{\ }\hlargument{=}{\ }\hlstring{"{}knn"{}}\hlkeyword{,}{\ }\hlargument{trControl}{\ }\hlargument{=}{\ }\hlsymbol{fitControl}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlsymbol{svmFit1}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{train}\hlkeyword{(}\hlsymbol{trainX}\hlkeyword{,}{\ }\hlsymbol{trainY}\hlkeyword{,}{\ }\hlargument{method}{\ }\hlargument{=}{\ }\hlstring{"{}svmRadial"{}}\hlkeyword{,}{\ }\hlargument{trControl}{\ }\hlargument{=}{\ }\hlsymbol{fitControl}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hspace*{\fill}\\
+\hlstd{}\hlsymbol{ldaFit2}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{train}\hlkeyword{(}\hlsymbol{trainX2}\hlkeyword{,}{\ }\hlsymbol{trainY}\hlkeyword{,}{\ }\hlargument{method}{\ }\hlargument{=}{\ }\hlstring{"{}lda"{}}\hlkeyword{,}{\ }\hlargument{trControl}{\ }\hlargument{=}{\ }\hlsymbol{fitControl}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlsymbol{knnFit2}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{train}\hlkeyword{(}\hlsymbol{trainX2}\hlkeyword{,}{\ }\hlsymbol{trainY}\hlkeyword{,}{\ }\hlargument{method}{\ }\hlargument{=}{\ }\hlstring{"{}knn"{}}\hlkeyword{,}{\ }\hlargument{trControl}{\ }\hlargument{=}{\ }\hlsymbol{fitControl}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlsymbol{svmFit2}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{train}\hlkeyword{(}\hlsymbol{trainX2}\hlkeyword{,}{\ }\hlsymbol{trainY}\hlkeyword{,}{\ }\hlargument{method}{\ }\hlargument{=}{\ }\hlstring{"{}svmRadial"{}}\hlkeyword{,}{\ }\hlargument{trControl}{\ }\hlargument{=}{\ }\hlsymbol{fitControl}\hlkeyword{)}\mbox{}
+\normalfont
+\end{flushleft}
+\end{kframe}
+\end{knitrout}
+
+
+Next, we formulate the fitted models as lists to easily classify the test data.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{flushleft}
+\ttfamily\noindent
+\hlsymbol{fittedModels1}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{list}\hlkeyword{(}\hlargument{ldaFit1}{\ }\hlargument{=}{\ }\hlsymbol{ldaFit1}\hlkeyword{,}{\ }\hlargument{knnFit1}{\ }\hlargument{=}{\ }\hlsymbol{knnFit1}\hlkeyword{,}{\ }\hlargument{svmFit1}{\ }\hlargument{=}{\ }\hlsymbol{svmFit1}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlsymbol{fittedModels2}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{list}\hlkeyword{(}\hlargument{ldaFit2}{\ }\hlargument{=}{\ }\hlsymbol{ldaFit2}\hlkeyword{,}{\ }\hlargument{knnFit2}{\ }\hlargument{=}{\ }\hlsymbol{knnFit2}\hlkeyword{,}{\ }\hlargument{svmFit2}{\ }\hlargument{=}{\ }\hlsymbol{svmFit2}\hlkeyword{)}\mbox{}
+\normalfont
+\end{flushleft}
+\end{kframe}
+\end{knitrout}
+
+
+Now, we classify the test observations with each of the six trained models.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{flushleft}
+\ttfamily\noindent
+\hlsymbol{modelPredictions1}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{lapply}\hlkeyword{(}\hlfunctioncall{predict}\hlkeyword{(}\hlsymbol{fittedModels1}\hlkeyword{,}{\ }\hlsymbol{testX}\hlkeyword{)}\hlkeyword{,}{\ }\hlsymbol{as.character}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlsymbol{modelPredictions2}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{lapply}\hlkeyword{(}\hlfunctioncall{predict}\hlkeyword{(}\hlsymbol{fittedModels2}\hlkeyword{,}{\ }\hlsymbol{testX2}\hlkeyword{)}\hlkeyword{,}{\ }\hlsymbol{as.character}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlsymbol{modelPredictions}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{cbind.data.frame}\hlkeyword{(}\hlfunctioncall{do.call}\hlkeyword{(}\hlsymbol{cbind}\hlkeyword{,}{\ }\hlsymbol{modelPredictions1}\hlkeyword{)}\hlkeyword{,}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlfunctioncall{do.call}\hlkeyword{(}\hlsymbol{cbind}\hlkeyword{,}{\ }\hlsymbol{modelPredictions2}\hlkeyword{)}\hlkeyword{)}\mbox{}
+\normalfont
+\end{flushleft}
+\end{kframe}
+\end{knitrout}
+
+
+At this point, we have each signatures's classifications for the test
+observations. We combine the signatures into a {\tt data.frame} to easily export
+for usage with the {\tt SQM} package. Each row of {\tt signatures} corresponds to
+a single observation in the test data set. Furthermore, notice that each row of
+{\tt signatures} has a {\tt signatureID}, {\tt truthClass}, and
+{\tt predictedClass}: the {\tt signatureID} identifies the corresponding
+signature, the {\tt truthClass} is the true value of the test observation, and
+the {\tt predictedClass} is the predicted classification for this test
+observation by the current signature specified in {\tt signatureID}. We display
+the first few signatures.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{flushleft}
+\ttfamily\noindent
+\hlsymbol{signatures}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{cbind}\hlkeyword{(}\hlargument{obsNum}{\ }\hlargument{=}{\ }\hlfunctioncall{seq\usebox{\hlnormalsizeboxunderscore}along}\hlkeyword{(}\hlsymbol{testY}\hlkeyword{)}\hlkeyword{,}{\ }\hlargument{truthClass}{\ }\hlargument{=}{\ }\hlsymbol{testY}\hlkeyword{,}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlsymbol{modelPredictions}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlsymbol{signatures}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{melt}\hlkeyword{(}\hlsymbol{signatures}\hlkeyword{,}{\ }\hlargument{id}{\ }\hlargument{=}{\ }\hlfunctioncall{c}\hlkeyword{(}\hlstring{"{}obsNum"{}}\hlkeyword{,}{\ }\hlstring{"{}truthClass"{}}\hlkeyword{)}\hlkeyword{,}{\ }\hlargument{measure}{\ }\hlargument{=}{\ }\hlfunctioncall{c}\hlkeyword{(}\hlstring{"{}ldaFit1"{}}\hlkeyword{,}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlstring{"{}knnFit1"{}}\hlkeyword{,}{\ }\hlstring{"{}svmFit1"{}}\hlkeyword{,}{\ }\hlstring{"{}ldaFit2"{}}\hlkeyword{,}{\ }\hlstring{"{}knnFit2"{}}\hlkeyword{,}{\ }\hlstring{"{}svmFit2"{}}\hlkeyword{)}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlsymbol{signatures}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{mutate}\hlkeyword{(}\hlsymbol{signatures}\hlkeyword{,}{\ }\hlargument{obsNum}{\ }\hlargument{=}{\ }NULL\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlsymbol{signatures}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{with}\hlkeyword{(}\hlsymbol{signatures}\hlkeyword{,}{\ }\hlfunctioncall{cbind.data.frame}\hlkeyword{(}\hlargument{signatureID}{\ }\hlargument{=}{\ }\hlsymbol{variable}\hlkeyword{,}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlsymbol{truthClass}\hlkeyword{,}{\ }\hlargument{predictedClass}{\ }\hlargument{=}{\ }\hlsymbol{value}\hlkeyword{)}\hlkeyword{)}\hspace*{\fill}\\
+\hlstd{}\hlfunctioncall{head}\hlkeyword{(}\hlsymbol{signatures}\hlkeyword{)}\mbox{}
+\normalfont
+\end{flushleft}
+\begin{verbatim}
+##   signatureID truthClass predictedClass
+## 1     ldaFit1  grey.soil      grey.soil
+## 2     ldaFit1  grey.soil      grey.soil
+## 3     ldaFit1  grey.soil      grey.soil
+## 4     ldaFit1  grey.soil      grey.soil
+## 5     ldaFit1  grey.soil      grey.soil
+## 6     ldaFit1  grey.soil damp.grey.soil
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+At this point, we have the signatures as they would be provided to the {\tt SQM}
+package. To continue with our example, we write the signatures to a CSV file.
+This CSV file would need to be provided in an actual application of the {\tt SQM}
+package.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{flushleft}
+\ttfamily\noindent
+\hlsymbol{inputFile}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlstring{"{}demo\usebox{\hlnormalsizeboxunderscore}signatures.csv"{}}\hspace*{\fill}\\
+\hlstd{}\hlfunctioncall{write.table}\hlkeyword{(}\hlsymbol{signatures}\hlkeyword{,}{\ }\hlargument{file}{\ }\hlargument{=}{\ }\hlsymbol{inputFile}\hlkeyword{,}{\ }\hlargument{sep}{\ }\hlargument{=}{\ }\hlstring{"{},"{}}\hlkeyword{,}{\ }\hlargument{row.names}{\ }\hlargument{=}{\ }\hlnumber{FALSE}\hlkeyword{,}\hspace*{\fill}\\
+\hlstd{}{\ }{\ }{\ }{\ }\hlargument{col.names}{\ }\hlargument{=}{\ }\hlnumber{FALSE}\hlkeyword{,}{\ }\hlargument{quote}{\ }\hlargument{=}{\ }\hlnumber{FALSE}\hlkeyword{)}\mbox{}
+\normalfont
+\end{flushleft}
+\end{kframe}
+\end{knitrout}
+
+
+\section{Signature Accuracy}
+
+The CSV file {\tt demo\_signatures.csv} contains the classifications for each
+signature. The Accuracy component of the {\tt SQM} package can be employed with
+relative ease after the signatures have been constructed. In fact, with our CSV
+file in hand, we are able to compute the accuracy measures in one line of R
+code. We do that here.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{flushleft}
+\ttfamily\noindent
+\hlsymbol{outAfAccuracy}{\ }\hlassignement{\usebox{\hlnormalsizeboxlessthan}-}{\ }\hlfunctioncall{afAccuracy}\hlkeyword{(}\hlargument{inputFile}{\ }\hlargument{=}{\ }\hlsymbol{inputFile}\hlkeyword{,}{\ }\hlargument{outputFilePrefix}{\ }\hlargument{=}{\ }\hlstring{"{}demo"{}}\hlkeyword{)}\mbox{}
+\normalfont
+\end{flushleft}
+\end{kframe}
+\end{knitrout}
+
+
+Notice the {\tt outputFilePrefix} argument having the value of {\tt demo}. Two
+output files are created that contain the accuracy estimates for the signatures.
+The first file generated is {\tt demo\_aggregate.csv}, which is a CSV file that
+contains the aggregate accuracy estimates for each signature. The second file
+generated is {\tt demo\_byClass.csv}, which is a CSV file that contains the
+accuracy measures for each class within each signature. The {\tt aggregate}
+measure is useful for quick comparison among signatures, while the class-by-class
+breakdown in {\tt byClass} is useful to measure the ability of a signature to
+correctly classify an observation for a given class.
+
+The object {\tt outAfAccuracy} contains these same accuracy results in a named
+list with two elements: {\tt aggregate} and {\tt byClass}.
+
+First, let's see the first few {\tt aggregate} results:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+##   signatureID accuracy precision recall sensitivity specificity    TPR
+## 1     knnFit1   0.9605    0.8814 0.8814      0.8814      0.9763 0.8814
+## 2     knnFit2   0.9549    0.8648 0.8648      0.8648      0.9730 0.8648
+## 3     ldaFit1   0.9433    0.8298 0.8298      0.8298      0.9660 0.8298
+## 4     ldaFit2   0.9381    0.8143 0.8143      0.8143      0.9629 0.8143
+## 5     svmFit1   0.9599    0.8798 0.8798      0.8798      0.9760 0.8798
+## 6     svmFit2   0.9563    0.8688 0.8688      0.8688      0.9738 0.8688
+##      TNR     FPR    FNR Fscore
+## 1 0.9763 0.02371 0.1186 0.8814
+## 2 0.9730 0.02703 0.1352 0.8648
+## 3 0.9660 0.03404 0.1702 0.8298
+## 4 0.9629 0.03715 0.1857 0.8143
+## 5 0.9760 0.02405 0.1202 0.8798
+## 6 0.9738 0.02624 0.1312 0.8688
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+And now, the first few {\tt byClass} results:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+##   signatureID               class accuracy precision recall sensitivity
+## 1     knnFit1         cotton.crop   0.9925    0.9589 0.9734      0.9734
+## 2     knnFit1      damp.grey.soil   0.9279    0.6290 0.6290      0.6290
+## 3     knnFit1           grey.soil   0.9583    0.8828 0.9253      0.9253
+## 4     knnFit1            red.soil   0.9863    0.9609 0.9826      0.9826
+## 5     knnFit1  vegetation.stubble   0.9666    0.8951 0.7887      0.7887
+## 6     knnFit1 very.damp.grey.soil   0.9312    0.8596 0.8444      0.8444
+##   specificity    TPR    TNR     FPR     FNR Fscore
+## 1      0.9949 0.9734 0.9949 0.00512 0.02657 0.9661
+## 2      0.9600 0.6290 0.9600 0.03995 0.37100 0.6290
+## 3      0.9672 0.9253 0.9672 0.03284 0.07466 0.9036
+## 4      0.9875 0.9826 0.9875 0.01252 0.01741 0.9716
+## 5      0.9886 0.7887 0.9886 0.01141 0.21132 0.8385
+## 6      0.9578 0.8444 0.9578 0.04224 0.15561 0.8519
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\end{document}

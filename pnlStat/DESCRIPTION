@@ -1,0 +1,11 @@
+Package: pnlStat
+Title: A collection of miscellaneous functions
+Version: 0.1.1
+Author: Landon Sego and others
+Description: Collection of miscellaneous functions especially suited for the
+    PNNL computing environment
+Depends:
+    Smisc
+Maintainer: Landon Sego <Landon.Sego@pnnl.gov>
+License: For internal PNNL use only
+RoxygenNote: 5.0.1

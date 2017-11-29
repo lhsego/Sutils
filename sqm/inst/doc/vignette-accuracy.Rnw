@@ -1,0 +1,263 @@
+\documentclass{article}
+\usepackage{url}
+
+\title{{\tt SQM}: An R Package for Signature Quality Metrics\\The Accuracy Component}
+\author{John A. Ramey}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+The {\tt SQM} package contains the R code for the Signature Quality Metrics project
+under the Signature Discovery Initiative (SDI) at the Pacific Northwest National
+Laboratory (PNNL). The purpose of the SQM project is to provide subject-matter
+experts (SMEs) with a set of tools to assess the quality of a set of signatures
+in terms of accuracy, cost, and utility. For each of these components, we
+have provided easy-to-use, accessible functions to measure the quality of
+inputted signatures. In this document, we discuss each of the SQM components
+and demonstrate their usage with realistic examples\footnote{Familarity with R
+is recommended to fully comprehend our provided examples.}.
+
+The {\tt Accuracy} component of {\tt SQM} enables an SME to explore the efficacy
+of a set of candidate signatures to determine which of these signatures are
+nearly optimal as defined by a variety of available accuracy measures. Paired
+with other SQM components, such as {\tt Cost}, the {\tt Accuracy} component
+equips an SME to identify cost-effective signatures that attain excellent
+accuracy.
+
+To motivate the {\tt Accuracy} component, we use a widely-studied, public domain
+data set with six signatures that we construct below. For demonstration purposes,
+we use the UCI Machine Learning Repository's Satellite data set\footnote{For more
+details about the Satellite data set, see
+\url{http://archive.ics.uci.edu/ml/datasets/Statlog+(Landsat+Satellite)}.},
+which is available in the {\tt mlbench} R package. 
+
+\subsection{Signature Construction}
+
+The {\tt SQM} package requires that candidate signatures are previously
+constructed. To demonstrate an approach this process, we first construct six
+candidate signatures from the Satellite data set using three machine learning
+algorithms, known as \emph{classifiers}. The three classifiers are applied to the
+Satellite data set to obtain the first three signatures. The remaining signatures
+are constructed by preprocessing the Satellite data set and then applying the
+same three classifiers.
+
+We begin the signature construction by loading the necessary R packages and the
+Satellite data set.
+
+<<setup, eval=FALSE, message=FALSE>>=
+library('caret')
+library('SQM')
+library('mlbench')
+library('reshape2')
+library('plyr')
+data('Satellite')
+@
+
+The Satellite data is provided in a {\tt data.frame}. For clarity, we explicitly
+assign the variables (i.e covariates/feature vectors) into the usual {\tt X}
+matrix. Also, we note that the true classes of each observation are given, and we
+assign these to the usual {\tt Y} vector.
+
+<<data, eval=FALSE>>=
+satelliteX <- subset(Satellite, select = -classes)
+satelliteY <- Satellite$classes
+@
+
+As provided, the class labels in the Satellite data set have white space, which
+can lead to annoying warnings. To stifle these warnings, we replace the
+whitespace in the class labels with periods.
+
+<<classLabels, eval=FALSE>>=
+levels(satelliteY) <- gsub(" ",  ".",  levels(satelliteY))
+@
+
+Next, we randomly partition the Satellite data set into a training and a test
+data set, where the training data set has 1/4 of the original observations and
+the test data set contains the remaining observations. To partition the data set,
+we use the {\tt createDataPartition} function from the {\tt caret} package after
+setting a fixed seed for the random number generator to achieve reproducible
+results.
+
+<<dataPartition, eval=FALSE>>=
+set.seed(42)
+inTrain <- createDataPartition(satelliteY, p = 1/4, list = FALSE, 
+                               times = 1)
+trainX <- satelliteX[inTrain, ]
+testX <- satelliteX[-inTrain, ]
+trainY <- satelliteY[inTrain]
+testY <- satelliteY[-inTrain]
+@
+
+The class labels for the observations in the data set are considered unknown from
+the perspective of the signatures. Thus, the class labels in {\tt testY} are
+considered as the unknown, ground truth. Below, we train three classifiers on the
+training data set and classify the test observations in hopes that we correctly
+identify their true classes, which are given in testY. For clarity, we store the
+test classes as {\tt truthClass}. Each classifier should be viewed as a different
+signature, and their test classifications/predictions are the {\tt predictedClass}
+in the {\tt SQM} package.
+
+<<truthClass, eval=FALSE>>=
+truthClass <- testY
+@
+
+We train each of the given classifiers with two training data sets.
+The first data set is the unaltered training data set from above.
+To construct the second data set, we keep only the features (variables) with
+a pairwise correlation above 0.95 with another feature. The choice of 0.95 is
+arbitrary. This feature selection approach is useful for demonstration but should
+be viewed as naive in practice.
+
+<<preprocess, eval=FALSE>>=
+keptFeatures <- findCorrelation(cor(trainX), cutoff = .95)
+trainX2 <- trainX[, keptFeatures]
+testX2 <- testX[, keptFeatures]
+@
+
+To construct each signature, we apply 10-fold cross-validation with the help of
+the {\tt trainControl} function given by the {\tt caret} package.
+<<trainControl, eval=FALSE>>=
+fitControl <- trainControl(method = "cv", number = 10)
+@ 
+
+As we have discussed above, we utilize three classifiers in order to construct
+the six signatures. These classifiers that we use are:
+
+\begin{enumerate}
+  \item Linear Discriminant Analysis
+  \item $k$-Nearest Neighbors
+  \item Support Vector Machine with Radial Basis Functions
+\end{enumerate}
+
+We train each classifier twice: first on the unaltered training data set and
+then on the preprocessed data set. We use the {\tt train} function from the
+{\tt caret} package to train the classifiers.
+
+<<trainClassifiers, warning=FALSE, message=FALSE, eval=FALSE>>=
+ldaFit1 <- train(trainX, trainY, method = "lda", 
+                 trControl = fitControl)
+knnFit1 <- train(trainX, trainY, method = "knn", 
+                 trControl = fitControl)
+svmFit1 <- train(trainX, trainY, method = "svmRadial", 
+                 trControl = fitControl)
+
+ldaFit2 <- train(trainX2, trainY, method = "lda", 
+                 trControl = fitControl)
+knnFit2 <- train(trainX2, trainY, method = "knn", 
+                 trControl = fitControl)
+svmFit2 <- train(trainX2, trainY, method = "svmRadial", 
+                 trControl = fitControl)
+@
+
+Next, we formulate the fitted models as lists to easily classify the test data.
+
+<<fittedModels, eval=FALSE>>=
+fittedModels1 <- list(ldaFit1 = ldaFit1, knnFit1 = knnFit1, 
+                      svmFit1 = svmFit1)
+fittedModels2 <- list(ldaFit2 = ldaFit2, knnFit2 = knnFit2, 
+                      svmFit2 = svmFit2)
+@
+
+Now, we classify the test observations with each of the six trained models.
+
+<<modelPredictions, eval=FALSE>>=
+modelPredictions1 <- lapply(predict(fittedModels1, testX), 
+                            as.character)
+modelPredictions2 <- lapply(predict(fittedModels2, testX2), 
+                            as.character)
+modelPredictions <- cbind.data.frame(
+                          do.call(cbind, modelPredictions1),
+                          do.call(cbind, modelPredictions2)
+                         )
+@
+
+At this point, we have each signatures's classifications for the test
+observations. We combine the signatures into a {\tt data.frame} to easily export
+for usage with the {\tt SQM} package. Each row of {\tt signatures} corresponds to
+a single observation in the test data set. Furthermore, notice that each row of
+{\tt signatures} has a {\tt signatureID}, {\tt truthClass}, and
+{\tt predictedClass}: the {\tt signatureID} identifies the corresponding
+signature, the {\tt truthClass} is the true value of the test observation, and
+the {\tt predictedClass} is the predicted classification for this test
+observation by the current signature specified in {\tt signatureID}. We display
+the first few signatures.
+
+<<signaturesDataFrame, eval=FALSE>>=
+signatures <- cbind(obsNum = seq_along(testY), truthClass = testY, 
+                    modelPredictions)
+signatures <- melt(signatures, id = c("obsNum", "truthClass"),
+                   measure = c("ldaFit1", "knnFit1", "svmFit1", 
+                               "ldaFit2", "knnFit2", "svmFit2"))
+signatures <- mutate(signatures, obsNum = NULL)
+signatures <- with(signatures,
+                   cbind.data.frame(signatureID = variable, 
+                                    truthClass,
+                                    predictedClass = value)
+                  )
+head(signatures)
+@ 
+<<exSig, echo=FALSE>>=
+read.csv(file="demo_signatures.csv", 
+         col.names=c("signatureID","truthClass","predictedClass"), 
+         nrows=10)
+@
+
+At this point, we have the signatures as they would be provided to the {\tt SQM}
+package. To continue with our example, we write the signatures to a CSV file.
+This CSV file would need to be provided in an actual application of the {\tt SQM}
+package.
+
+<<signatureFileExport, eval=FALSE>>=
+inputFile <- "demo_signatures.csv"
+write.table(signatures, file = inputFile, sep = ",", 
+            row.names = FALSE,
+            col.names = FALSE, 
+            quote = FALSE)
+@
+
+\section{Signature Accuracy}
+
+The CSV file {\tt demo\_signatures.csv} contains the classifications for each
+signature. The Accuracy component of the {\tt SQM} package can be employed with
+relative ease after the signatures have been constructed. In fact, with our CSV
+file in hand, we are able to compute the accuracy measures in one line of R
+code. We do that here.
+
+<<afAccuracy, eval=FALSE>>=
+outAfAccuracy <- afAccuracy(inputFile = inputFile, 
+                            outputFilePrefix = "demo")
+@ 
+
+Notice the {\tt outputFilePrefix} argument having the value of {\tt demo}. Two
+output files are created that contain the accuracy estimates for the signatures.
+The first file generated is {\tt demo\_aggregate.csv}, which is a CSV file that
+contains the aggregate accuracy estimates for each signature. The second file
+generated is {\tt demo\_byClass.csv}, which is a CSV file that contains the
+accuracy measures for each class within each signature. The {\tt aggregate}
+measure is useful for quick comparison among signatures, while the class-by-class
+breakdown in {\tt byClass} is useful to measure the ability of a signature to
+correctly classify an observation for a given class.
+
+The object {\tt outAfAccuracy} contains these same accuracy results in a named
+list with two elements: {\tt aggregate} and {\tt byClass}.
+
+First, let's see the first few {\tt aggregate} results:
+
+<<aggregateResults, eval=FALSE, echo=FALSE>>=
+outAfAccuracy$aggregate
+@ 
+<<exAgg, echo=FALSE>>=
+read.csv(file="demo_aggregate.csv")
+@
+And now, the first few {\tt byClass} results:
+
+<<byClassResults, eval=FALSE, echo=FALSE>>=
+head(outAfAccuracy$byClass)
+@ 
+<<exClass, echo=FALSE>>=
+read.csv(file="demo_byClass.csv", nrows=6)
+@
+\end{document}

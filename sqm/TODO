@@ -1,0 +1,8 @@
+0. Finish rework of basic accuracy metrics
+
+1. Single attribute utility functions:  if a value is passed in that exceeds the zrange, throw an error?  warning? what?
+2. Contour or surface plots for maUtil objects?
+4. Gather code for all the SA util methods into a single file for easier management
+5. Finish LICENSE file (citation of SQM paper)
+6. Parallelization and grouping for calcFidelity.  default arg for groupVars = NULL, thus with a possibility to not group at all.
+7. Revisit the error message in confusion()--do we really need that constraint?

@@ -1,0 +1,9 @@
+Package: cjr
+Title: Combined Judgmental and Random sampling methodology
+Version: 2010.03.18
+Author: Landon Sego
+Description: Functions for calculating the confidences and sample sizes for the Combined Judgment Random methodology
+Maintainer: Landon Sego <Landon.Sego@pnl.gov>
+Depends:  pnlStat, utils
+License: PNNL business sensitive
+Packaged: 

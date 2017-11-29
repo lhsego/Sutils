@@ -1,0 +1,13 @@
+Package: piclapply
+Type: Package
+Title: Easy Parallel Computing with R on PIC
+Version: 1.1.3
+Date: 2017-10-19
+Author: Landon Sego
+Maintainer: Daniel Fortin <Daniel.Fortin@pnnl.gov>
+Description: An extension of lapply() that uses PIC to process the list in
+    parallel
+License: PNNL
+Imports:
+    Smisc
+RoxygenNote: 5.0.1

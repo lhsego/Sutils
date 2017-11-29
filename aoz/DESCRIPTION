@@ -1,0 +1,9 @@
+Package: aoz
+Title: Accept on Zero Compliance Sampling
+Version: 2010.06.01
+Author: Landon Sego
+Description: Functions mimic those used in VSP to calculate AOZ 
+Maintainer: Landon Sego <Landon.Sego@pnl.gov>
+Depends:  pnlStat
+License: Unknown
+Packaged: 

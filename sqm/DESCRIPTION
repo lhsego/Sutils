@@ -1,0 +1,17 @@
+Package: SQM
+Title: SQM: An R Package for Signature Quality Metrics
+Version: 0.1.1
+Date: 2015-11-27
+Author: Landon H. Sego, John A. Ramey, Amanda M. White
+Maintainer: Landon Sego <landon.sego@pnnl.gov>
+URL: http://pnnl.github.io/SQM
+Description: Contains methods for performing multi-attribute utility
+    assessments, estimating error of multi-attribute utility scores via
+    bootstapping, as well as the typical classifier performance metrics associated
+    with confusion matrices.
+License: file LICENSE
+Depends:
+    Smisc,
+    plyr,
+    parallel
+RoxygenNote: 5.0.1

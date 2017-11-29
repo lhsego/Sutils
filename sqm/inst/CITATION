@@ -1,0 +1,14 @@
+citHeader("To cite SQM in publications use:")
+
+citEntry(entry = "Manual",
+  title        = "{SQM: Signature Quality Metrics}",
+  author       = personList(as.person("Landon H. Sego"), as.person("John A. Ramey"), as.person("Amanda M. White")),
+  organization = "{Pacific Northwest National Laboratory}",
+  address      = "Richland, WA",
+  year         = "2016",
+  url          = "http://pnnl.github.io/SQM",
+
+  textVersion  =
+  paste("Sego LH. 2016. SQM: Signature Quality Metrics. Pacific Northwest National Laboratory.",
+        "http://pnnl.github.io/SQM.")
+)

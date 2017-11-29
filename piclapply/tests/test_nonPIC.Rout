@@ -1,0 +1,79 @@
+
+R version 3.3.1 (2016-06-21) -- "Bug in Your Hair"
+Copyright (C) 2016 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # Test script for a non-PIC host.  Meant to be run primarily interactively--which I why I didn't put them into
+> # a 'testthat' format.
+> #
+> # Landon Sego, 17 October 2017
+> 
+> library(piclapply)
+> 
+> try(killSlurm(839))
+Error : killSlurm(839)
+You must be using the following system(s) to call this function: constance
+> 
+> try(example(piclapply))
+
+pclppl> ########################################
+pclppl> # Example 1
+pclppl> ########################################
+pclppl> 
+pclppl> ## You must set the PIC account name before launching this example:
+pclppl> ## i.e., account <- "PIC_account_name"
+pclppl> ## Don't show: 
+pclppl> if (exists("account", envir = .GlobalEnv)) {
+pclppl+   account <- get("account", envir = .GlobalEnv)
+pclppl+ } else {
+pclppl+    stop("To run this example, you need to assign the PIC account name to 'account' in the Global Environment, as follows:\n",
+pclppl+        "account <- \"PIC_account_name\"")
+pclppl+ }
+Error in eval(expr, envir, enclos) : 
+  To run this example, you need to assign the PIC account name to 'account' in the Global Environment, as follows:
+account <- "PIC_account_name"
+> 
+> # Note:  you may need to change the account name
+> account.name <- "TeMpSA"
+> 
+> # Run this on a non-PIC host
+> res.1 <- try(piclapply(a, f1, account.name,
++                        needed.objects = c("b1", "b2"),
++                        jobName = "example.1",
++                        numNodes = 1,
++                        partition = "short",
++                        check.interval.sec = 1,
++                        time.limit.mins = 1,
++                        tarball = "none",
++                        verbose = TRUE))
+
+************************************************************
+*****  Launching piclapply()
+************************************************************
+
+Error : piclapply(a, f1, account.name, needed.objects = c("b1", "b2"), 
+    jobName = "example.1", numNodes = 1, partition = "short", 
+    check.interval.sec = 1, time.limit.mins = 1, tarball = "none", 
+    verbose = TRUE)
+You must be using the following system(s) to call this function: constance
+> 
+> 
+> 
+> 
+> proc.time()
+   user  system elapsed 
+   0.21    0.04    0.26 
