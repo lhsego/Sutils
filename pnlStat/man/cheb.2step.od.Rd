@@ -73,11 +73,10 @@ cheb.2step.od(-1 * c(rgamma(200, shape=10, scale=20), rgamma(5, shape=10, scale=
 
 
 }
-\author{
-Brett Amidan with additions from John Hathway and Landon Sego
-}
 \seealso{
 \code{\link{cheb.od}}
 }
+\author{
+Brett Amidan with additions from John Hathway and Landon Sego
+}
 \keyword{misc}
-

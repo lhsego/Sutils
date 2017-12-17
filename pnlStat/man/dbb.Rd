@@ -65,6 +65,7 @@ integer with a warning.
 when the probabilities for tail values are small.  This can result in
 unusual behavior for \code{pbb} and \code{qbb}.
 }
+
 \examples{
 # set up parameters
 w <- 10
@@ -87,9 +88,6 @@ lines(0:N, dbb(0:N, N, u,v), type = "b")
 # this to return 0:29
 qbb(pbb(0:29, 29, 1, 33), 29, 1, 33)
 }
-\author{
-Kevin R. Coombes, modified by Landon Sego
-}
 \references{
 \url{http://bioinformatics.mdanderson.org/Software/OOMPA/Current/TailRank-manual.pdf}
 }
@@ -97,5 +95,7 @@ Kevin R. Coombes, modified by Landon Sego
 \code{\link{dbeta}} for the beta distribution and
 \code{\link{dbinom}} for the binomial distribution.
 }
+\author{
+Kevin R. Coombes, modified by Landon Sego
+}
 \keyword{misc}
-

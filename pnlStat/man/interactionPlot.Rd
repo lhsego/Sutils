@@ -112,10 +112,6 @@ interactionPlot(dose, supp, len, fixed = TRUE, col  =  2:3, type = "p",
                 main = "Error bars have no meaning: just for illustration")
 })
 }
-\author{
-Originates in the \code{stats} package in the R distribution,
-modifications by Landon Sego
-}
 \references{
 Chambers, J. M., Freeny, A and Heiberger, R. M. (1992)
 \emph{Analysis of variance; designed experiments.} Chapter 5 of
@@ -125,5 +121,8 @@ Wadsworth & Brooks/Cole.
 \seealso{
 \code{\link{interaction.plot}}
 }
+\author{
+Originates in the \code{stats} package in the R distribution,
+modifications by Landon Sego
+}
 \keyword{hplot}
-

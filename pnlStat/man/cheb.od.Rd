@@ -40,9 +40,6 @@ cheb.od(c(rnorm(300), rnorm(300, 4, 1)), unimodal=FALSE)
 
 
 }
-\author{
-Brett Amidan with additions from John Hathaway and Landon Sego
-}
 \references{
 For the Chebyshev inequality, see:
 
@@ -62,5 +59,7 @@ Theorem.  Aerospace Conferece, IEEE. IEEEAC paper #1198. 1-6.
 \seealso{
 \code{\link{cheb.2step.od}}
 }
+\author{
+Brett Amidan with additions from John Hathaway and Landon Sego
+}
 \keyword{misc}
-

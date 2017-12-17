@@ -64,11 +64,10 @@ y <- x
 find.dframeEquiv(x, y)
 
 }
-\author{
-Landon Sego
-}
 \seealso{
 \code{\link{dframeEquiv}}
 }
+\author{
+Landon Sego
+}
 \keyword{misc}
-
